@@ -18,7 +18,7 @@ var routes = require('./routes/index');
 
 //database requirements
 require('./models/user.js');
-var mongoose = require('mongoose');      
+var mongoose = require('mongoose');
 mongoose.connect("mongodb://localhost:27017/voting-poll");
 
 
@@ -37,6 +37,11 @@ app.use(session({
   secret: 'super voting polls'
 }));
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+  extended: false
+}));
+app.use(cookieParser());
 
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -49,13 +54,6 @@ initPassport(passport);
 
 app.use('/', routes);
 app.use('/auth', authenticate);
-
-
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
-
-
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

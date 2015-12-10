@@ -1,8 +1,11 @@
 angular.module('Voting-Poll', ['ngRoute', 'AuthModule', 'MainModule'])
 
-.config(function($routeProvider){
+.config(function($routeProvider, $locationProvider){
 	$routeProvider
 		//the login display
+		.when('/', {
+			controller: 'MainController'
+		})
 		.when('/login', {
 			templateUrl: './partials/login.html',
 			controller: 'AuthController'
@@ -12,4 +15,8 @@ angular.module('Voting-Poll', ['ngRoute', 'AuthModule', 'MainModule'])
 			templateUrl: './partials/register.html',
 			controller: 'AuthController'
 		});
+});
+
+angular.element(document).ready(function() {
+	angular.bootstrap(document, ['Voting-Poll']);
 });

@@ -11,13 +11,12 @@ module.exports = function(passport){
 	// route for facebook authentication and login
 	router.get('/twitter', passport.authenticate('twitter'));
 	 
-	// handle the callback after facebook has authenticated the user
-	router.get('/twitter/callback',
-	  passport.authenticate('facebook', {
-	    successRedirect : '/',
-	    failureRedirect : '/login'
+	router.get('/twitter/callback', 
+	  passport.authenticate('twitter', { 
+		 successRedirect: '/',
+         failureRedirect: '/login' 
 	  })
-	);		
+	);	
 	
 	// route for facebook authentication and login
 	router.get('/facebook', passport.authenticate('facebook'));
