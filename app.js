@@ -12,12 +12,16 @@ var LocalStrategy = require('passport-local').Strategy;
 //global.passport = passport;
 var session = require('express-session');
 
+
+var authenticate = require('./routes/authenticate.js')(passport);
+var routes = require('./routes/index');
+
 //database requirements
 require('./models/user.js');
 var mongoose = require('mongoose');      
 mongoose.connect("mongodb://localhost:27017/voting-poll");
 
-var authenticate = require('./routes/authenticate.js')(passport);
+
 
 var app = express();
 
@@ -33,9 +37,7 @@ app.use(session({
   secret: 'super voting polls'
 }));
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(passport.initialize());
@@ -45,7 +47,15 @@ app.use(passport.session());
 var initPassport = require('./passport-init');
 initPassport(passport);
 
+app.use('/', routes);
 app.use('/auth', authenticate);
+
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

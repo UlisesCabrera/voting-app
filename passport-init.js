@@ -1,6 +1,13 @@
-var LocalStrategy = require('passport-local').Strategy;
+//fb requirements
+var FacebookStrategy = require("passport-facebook").Strategy;
+var fbConfig = require("./auths/fb");
+
+// twitter requirements
 var TwitterStrategy = require("passport-twitter").Strategy;
+
 var bCrypt = require('bcrypt-nodejs');
+
+//database
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
 
@@ -31,74 +38,99 @@ module.exports = function(passport){
 
 	});
 
-	passport.use('login', new LocalStrategy({
-			passReqToCallback : true
-		},
-		function(req, username, password, done) {
-			
-			User.findOne({ username: username }, function(err, user){
-				
-				if (err) {
-					return done (err, false);
-				}				
-				
-				//if there is no user with this username
-				if (!user) {
-					console.log('User Not Found with username '+username);
-					return done(null, false);     
-				};
-				
-				// check if the password is correct
-				if (!isValidPassword(user, password)) {
-					console.log('Invalid Password');
-				    return done(null, false); // redirect back to login page
-				};
-				
-				// successfully signed in
-				console.log('successfully signed in');		
-				return done(null, user);			
-					
-			});
-		}
-	));
 
-	passport.use('signup', new LocalStrategy({
-			passReqToCallback : true // allows us to pass back the entire request to the callback
-		},
-		function(req, username, password, done) {
-			
-			User.findOne({username : username}, function(err, user){
-				if (err) {
-					console.log('Error in SignUp: '+err);
-					return done(err);
-				}
-				
-				// we have already signed this user up
-				if (user) {
-					
-					console.log('User already exists with username: ');
-					return done(null, false);
-				}
-				
-				// creates new user based on User schema
-				var user  = new User();
-				
-				user.username = username;
-				user.password = createHash(password);
-				
-				user.save(function(err, user) {
-					if (err) {
-						console.log('Error in Saving user: '+err);  
-						throw err;  
-					}
-					console.log(" sucessfully signed up user " + user.username);	
-				});
-				
-				return done(null, user)
-					
-			});
-		})
-	);
+passport.use('facebook', new FacebookStrategy({
+  clientID        : fbConfig.appID,
+  clientSecret    : fbConfig.appSecret,
+  callbackURL     : fbConfig.callbackUrl
+},
+ 
+  // facebook will send back the tokens and profile
+  function(access_token, refresh_token, profile, done) {
+    
+    console.log(profile);
+    // asynchronous
+    process.nextTick(function() {
+     
+      // find the user in the database based on their facebook id
+      User.findOne({ 'username' : profile.displayName }, function(err, user) {
+ 
+        // if there is an error, stop everything and return that
+        // ie an error connecting to the database
+        if (err)
+          return done(err);
+ 
+          // if the user is found, then log them in
+          if (user) {
+            return done(null, user); // user found, return that user
+          } else {
+          	
+            // if there is no user found with that facebook id, create them
+            var user = new User();
+ 			user.username = profile.displayName;
+ 			user.password = profile.id;
+            // set all of the facebook information in our user model
+
+ 
+            // save our user to the database
+            user.save(function(err) {
+              if (err)
+                throw err;
+ 
+              // if successful, return the new user
+              return done(null, user);
+            });
+         } 
+      });
+    });
+}));
+
+passport.use('facebook', new FacebookStrategy({
+  clientID        : fbConfig.appID,
+  clientSecret    : fbConfig.appSecret,
+  callbackURL     : fbConfig.callbackUrl
+},
+ 
+  // facebook will send back the tokens and profile
+  function(access_token, refresh_token, profile, done) {
+    
+    console.log(profile);
+    // asynchronous
+    process.nextTick(function() {
+     
+      // find the user in the database based on their facebook id
+      User.findOne({ 'username' : profile.displayName }, function(err, user) {
+ 
+        // if there is an error, stop everything and return that
+        // ie an error connecting to the database
+        if (err)
+          return done(err);
+ 
+          // if the user is found, then log them in
+          if (user) {
+            return done(null, user); // user found, return that user
+          } else {
+          	
+            // if there is no user found with that facebook id, create them
+            var user = new User();
+ 			user.username = profile.displayName;
+ 			user.password = profile.id;
+            // set all of the facebook information in our user model
+
+ 
+            // save our user to the database
+            user.save(function(err) {
+              if (err)
+                throw err;
+ 
+              // if successful, return the new user
+              return done(null, user);
+            });
+         } 
+      });
+    });
+}));	
+	
 	
 	var isValidPassword = function(user, password){
 		return bCrypt.compareSync(password, user.password);

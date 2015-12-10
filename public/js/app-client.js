@@ -1,19 +1,7 @@
-angular.module('Voting-Poll', ['ngRoute', 'ngResource', 'AuthModule', 'MainModule']).run(function($http, $rootScope) {
-	$rootScope.authenticated = false;
-	$rootScope.current_user = 'Guest';
+angular.module('Voting-Poll', ['ngRoute', 'AuthModule', 'MainModule'])
 
-	$rootScope.signout = function(){
-		$http.get('auth/signout');
-		$rootScope.authenticated = false;
-		$rootScope.current_user = 'Guest';
-	};
-}).config(function($routeProvider){
+.config(function($routeProvider){
 	$routeProvider
-		//the timeline display
-		.when('/', {
-			templateUrl: './partials/main.html',
-			controller: 'MainController'
-		})
 		//the login display
 		.when('/login', {
 			templateUrl: './partials/login.html',
