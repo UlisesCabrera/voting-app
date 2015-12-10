@@ -8,7 +8,6 @@ var bodyParser = require('body-parser');
 // authentication requirements
 var bcrypt = require('bcrypt-nodejs');
 var passport = require('passport');
-var LocalStrategy = require('passport-local').Strategy;
 //global.passport = passport;
 var session = require('express-session');
 
@@ -49,7 +48,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // initialize passport
-var initPassport = require('./passport-init');
+var initPassport = require('./config/passport-init');
 initPassport(passport);
 
 app.use('/', routes);

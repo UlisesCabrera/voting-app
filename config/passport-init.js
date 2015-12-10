@@ -9,6 +9,9 @@ module.exports = function(passport) {
   //twitter strategy
   require("./strategies/twitter")(passport);
 
+  //google strategy
+  require("./strategies/google")(passport);
+
   // Passport needs to be able to serialize and deserialize users to support persistent login sessions
   passport.serializeUser(function(user, done) {
     // tell passport which id to use for user
