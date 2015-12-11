@@ -1,16 +1,17 @@
-var TwitterStrategy = require("passport-twitter").Strategy;
+var LinkedInStrategy = require('passport-linkedin').Strategy;
 var bCrypt = require('bcrypt-nodejs');
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
 
 module.exports = function(passport) {
 
-  passport.use('twitter', new TwitterStrategy({
-      consumerKey: 'GxS1jEp8WbJNI7JLvulC7vzDe',
-      consumerSecret: 'jNMKqh0hzAAMd3T8lu4UPnJpjqWg9R5Z870NZuiVcUYMI913Az',
-      callbackURL: 'https://voting-app-basejump-elgris12.c9users.io/auth/twitter/callback'
+  passport.use('linkedin', new LinkedInStrategy({
+      consumerKey: '77cqdfa5wcmie6',
+      consumerSecret: '2TF6KApXsJaS8T8e',
+      callbackURL: 'https://voting-app-basejump-elgris12.c9users.io/auth/linkedin/callback'
     },
     function(token, tokenSecret, profile, done) {
+      console.log(profile);
       // asynchronous
       process.nextTick(function() {
 

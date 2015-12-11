@@ -8,7 +8,7 @@ module.exports = function(passport){
 		res.redirect('/');
 	});
 	
-	// route for facebook authentication and login
+	// route for twitter authentication and login
 	router.get('/twitter', passport.authenticate('twitter'));
 	 
 	router.get('/twitter/callback', 
@@ -16,12 +16,21 @@ module.exports = function(passport){
 		 successRedirect: '/',
          failureRedirect: '/login' 
 	  })
-	);	
+	);
+
+	// route for linkedin authentication and login
+	router.get('/linkedin', passport.authenticate('linkedin'));
+	 
+	router.get('/linkedin/callback', 
+	  passport.authenticate('linkedin', { 
+		 successRedirect: '/',
+         failureRedirect: '/login' 
+	  })
+	);		
 	
 	// route for facebook authentication and login
 	router.get('/facebook', passport.authenticate('facebook'));
 	 
-	// handle the callback after facebook has authenticated the user
 	router.get('/facebook/callback',
 	  passport.authenticate('facebook', {
 	    successRedirect : '/',
@@ -29,6 +38,7 @@ module.exports = function(passport){
 	  })
 	);
 	
+	// route for google authentication and login
 	router.get('/google',
 	  passport.authenticate('google', { scope: 'https://www.googleapis.com/auth/plus.login' }));
 	
