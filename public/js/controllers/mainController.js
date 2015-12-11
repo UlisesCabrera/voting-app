@@ -1,5 +1,5 @@
-angular.module('MainModule', ['UsersState'])
-    .controller('MainController',['$scope','Authentication', '$http', 
+angular.module('TimelineModule', ['UsersState'])
+    .controller('TimelineController',['$scope','Authentication', '$http', 
         function($scope, Authentication, $http){
     
 

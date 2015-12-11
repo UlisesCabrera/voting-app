@@ -1,5 +1,6 @@
-angular.module('Voting-Poll', ['ngRoute', 'AuthModule', 'MainModule'])
-
+angular.module('Voting-Poll', ['ngRoute', 'AuthModule', 'TimelineModule']).run(function($rootScope){
+	$rootScope.current_user = '';
+})
 .config(function($routeProvider, $locationProvider){
 	$routeProvider
 		//the login display

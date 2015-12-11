@@ -2,16 +2,32 @@ var express = require('express');
 var router = express.Router();
 var successFailureRedirects = { 
 		 successRedirect: '/',
-         failureRedirect: '/#/login'
+         failureRedirect: '/#login'
 };
 
 module.exports = function(passport){
 	
+	//sends successful login state back to angular
+	router.get('/failure', function(req, res){
+		res.send({state: 'failure', user: null});
+	});
+	
+	//sends successful login state back to angular
+	router.get('/success', function(req, res){
+		res.send({state: 'success', user: req.user ? req.user : null});
+	});
+
 	//log in local
-	router.post('/login', passport.authenticate('login', successFailureRedirects));
+	router.post('/login', passport.authenticate('login', {
+		successRedirect: '/auth/success',
+		failureRedirect: '/auth/failure'
+	}));
 
 	//sign up local
-	router.post('/signup', passport.authenticate('signup', successFailureRedirects));
+	router.post('/signup', passport.authenticate('signup', {
+		successRedirect: '/auth/success',
+		failureRedirect: '/auth/failure'
+	}));
 	
 	// route for twitter authentication and login
 	router.get('/twitter', passport.authenticate('twitter'));
