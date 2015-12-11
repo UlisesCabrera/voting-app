@@ -4,7 +4,7 @@ angular.module('Voting-Poll', ['ngRoute', 'AuthModule', 'MainModule'])
 	$routeProvider
 		//the login display
 		.when('/', {
-			controller: 'MainController'
+			controller: 'AuthController'
 		})
 		.when('/login', {
 			templateUrl: './partials/login.html',

@@ -3,6 +3,9 @@ var mongoose = require('mongoose');
 var User = mongoose.model('User');
 
 module.exports = function(passport) {
+  
+
+  
   //fb strategy
   require("./strategies/fb")(passport);
 
@@ -42,4 +45,8 @@ module.exports = function(passport) {
     })
 
   });
+  
+  //local strategy
+  require("./strategies/local")(passport);  
+  
 };
