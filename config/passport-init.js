@@ -12,8 +12,11 @@ module.exports = function(passport) {
   //google strategy
   require("./strategies/google")(passport);
   
-  //google strategy
+  //linkedin strategy
   require("./strategies/linkedin")(passport);
+
+  //github strategy
+  require("./strategies/github")(passport);  
 
   // Passport needs to be able to serialize and deserialize users to support persistent login sessions
   passport.serializeUser(function(user, done) {

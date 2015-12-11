@@ -19,7 +19,7 @@ module.exports = function(passport){
 	);
 
 	// route for linkedin authentication and login
-	router.get('/linkedin', passport.authenticate('linkedin'));
+	router.get('/linkedin', passport.authenticate('linkedin', { scope: [ 'user:email' ] }));
 	 
 	router.get('/linkedin/callback', 
 	  passport.authenticate('linkedin', { 
@@ -37,6 +37,16 @@ module.exports = function(passport){
 	    failureRedirect : '/login'
 	  })
 	);
+	
+	// route for github authentication and login
+	router.get('/github', passport.authenticate('github'));
+	 
+	router.get('/github/callback', 
+	  passport.authenticate('github', { 
+		 successRedirect: '/',
+         failureRedirect: '/login' 
+	  })
+	);	
 	
 	// route for google authentication and login
 	router.get('/google',
