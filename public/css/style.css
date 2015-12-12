@@ -1,9 +1,74 @@
 body {
 	padding-top:70px;
+	background-image: url('../img/notebook.png');
 }
 
+.auth-div {
+	background-color: white;
+	border: 1px solid black;
+	border-radius: 10px;
+	padding: 20px;
+	-webkit-box-shadow: 2px 7px 45px 2px rgba(0,0,0,0.19);
+	-moz-box-shadow: 2px 7px 45px 2px rgba(0,0,0,0.19);
+	box-shadow: 2px 7px 45px 2px rgba(0,0,0,0.19);	
+}
+
+.socialLogo {
+	font-size: 1.6em;
+}
+
+.btn {
+	color: white;
+	margin: 10px auto;
+	-webkit-box-shadow: inset 0px 0px 60px 2px rgba(0,0,0,0.25);
+	-moz-box-shadow: inset 0px 0px 60px 2px rgba(0,0,0,0.25);
+	box-shadow: inset 0px 0px 60px 2px rgba(0,0,0,0.25);
+}
+
+.btn:hover {
+	color:black;
+	background-color: white;
+}
+
+.facebook-btn {
+	background-color: #3b5998;
+}
+
+.twitter-btn {
+	background-color: #1dcaff;
+}
+
+.linkedin-btn {
+	background-color: #007bb6;
+}
+
+.google-btn {
+	background-color: #d34836;
+}
+
+.github-btn {
+	background-color: #999999;
+}
+
+
+.orText {
+	font-size: 3em;
+	margin: 40px auto;
+}
+
+
 .form-auth {
-	max-width: 330px;
 	padding: 5px;
 	margin: 0 auto;
+}
+
+ h2 {
+	margin-top:0;
+	margin-bottom:30px;
+}
+
+input.btn.btn-primary.login-btn,
+input.btn.btn-primary.register-btn {
+	margin-left:0;
+	width: 100%;
 }

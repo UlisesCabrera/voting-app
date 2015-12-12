@@ -9,6 +9,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-route.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-cookies.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <!-- HTML5 shim, for IE6-8 support of HTML elements -->
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -21,12 +22,12 @@
 			<nav class="navbar-fluid navbar-default navbar-fixed-top">
 				<div class="container">
 					<a class="navbar-brand" href="#"> My Poll App</a>
-					<p class="navbar-right navbar-text" ng-hide="getSocialUser() || getLocalUser()"><a href="#/login">Login</a> or <a href="#/signup">Register</a></p>
+					<p class="navbar-right navbar-text" ng-hide="getSocialUser() || getLocalUser()"><a href="#/login">Login</a></p>
 					<p class="navbar-right navbar-text" ng-show="getSocialUser() || getLocalUser()"><a href="#" ng-click="signout()">Logout</a></p>
 					<p class="navbar-right navbar-text" ng-show="getSocialUser()|| getLocalUser()">Signed in as {{ getSocialUser() || getLocalUser() }}</p>
 				</div>
 			</nav>
-			<div class="col-xs-12">
+			<div class="row">
 				<div ng-view>
 				</div>
 			
@@ -46,7 +47,7 @@
  <script type="text/javascript" src="js/services/userState.js"></script>
 
 	<!-- controllers -->
-	<script type="text/javascript" src="js/controllers/mainController.js"></script>
+	<script type="text/javascript" src="js/controllers/timelineController.js"></script>
 	<script type="text/javascript" src="js/controllers/authController.js"></script>
 	
 	<!-- main module -->

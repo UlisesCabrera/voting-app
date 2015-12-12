@@ -1,12 +1,25 @@
-<form class="form-auth" ng-submit="login()">
-	<h2>Log In</h2>
-	<p class="text-warning">{{error_message}}</p>
-	<input type="username" ng-model="user.username" placeholder="Username" class="form-control"><br>
-	<input type="password" ng-model="user.password" placeholder="Password" class="form-control"><br>
-	<input type="submit" value="Log in" class="btn btn-primary" />
-</form>
-<a class="btn btn-large btn-primary" href="auth/facebook">sign with facebook</a>
-<a class="btn btn-large btn-info" href="auth/twitter">sign with twitter</a>
-<a class="btn btn-large btn-danger" href="auth/google">sign with Google</a>
-<a class="btn btn-large btn-success" href="auth/linkedin">sign with linkedIn</a>
-<a class="btn btn-large btn-default" href="auth/github">sign with github</a>
+<div class="col-xs-12 col-sm-6 col-sm-offset-3 auth-div">
+	<h2 class="text-center">Sign with Social Media Account:</h2>
+	<ul class="list-unstyled center-block"> 
+		<li><a class="btn btn-block btn-default facebook-btn" href="auth/facebook"> <span class="socialLogo"><i class="fa fa-facebook"></i></span>  Facebook</a></li>
+		<li><a class="btn btn-block btn-default twitter-btn" href="auth/twitter"><span class="socialLogo"><i class="fa fa-twitter"></i></span>  Twitter</a></li>
+		<li><a class="btn btn-block btn-default google-btn" href="auth/google"><span class="socialLogo"><i class="fa fa-google-plus"></i></span>  Google+</a> </li>
+		<li><a class="btn btn-block btn-default linkedin-btn" href="auth/linkedin"><span class="socialLogo"><i class="fa fa-linkedin"></span></i>  LinkedIn</a></li>
+		<li><a class="btn btn-block btn-default github-btn" href="auth/github"><span class="socialLogo"><i class="fa fa-github"></i></span>  GitHub</a></li>
+	</ul>
+	
+	<hr>
+	<p class="text-center orText">OR</p>
+	<hr>
+	
+	<form class="form-auth" ng-submit="login()">
+		<h2 class="text-center">Use Local Account</h2>
+		<p class="text-warning">{{error_message}}</p>
+		<input type="username" ng-model="user.username" placeholder="Username" class="form-control"><br>
+		<input type="password" ng-model="user.password" placeholder="Password" class="form-control"><br>
+	    <a href="#/signup">Don't have an account? Register here</a><br>
+	    
+		<input type="submit" value="Log in" class="btn btn-primary login-btn" />
+		
+	</form>
+</div>
