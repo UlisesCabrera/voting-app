@@ -71,12 +71,17 @@ hr {
 	margin-bottom:30px;
 }
 
+h3 {
+	margin-bottom: 20px;
+}
+
 .forgotPassword {
 	margin-top:10px;
 }
 
 input.btn.btn-primary.login-btn,
-input.btn.btn-primary.register-btn {
+input.btn.btn-primary.register-btn,
+input.btn.btn-primary.forgot-btn {
 	margin-left:0;
 	width: 100%;
 }

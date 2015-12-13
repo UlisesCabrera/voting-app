@@ -56,10 +56,10 @@ module.exports = function (passport) {
  				
 				// creates new user based on User schema
 				var user = new User();
-
+				console.log(req.body.email);
 				user.username = username;
 				user.password = createHash(password);
-				user.email = req.email;
+				user.email = req.body.email;
 
 
 				user.save(function (err, user) {

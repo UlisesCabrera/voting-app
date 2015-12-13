@@ -1,5 +1,9 @@
 var express = require('express');
 var router = express.Router();
+var mongoose = require('mongoose');
+var User = mongoose.model('User');
+var bCrypt = require('bcrypt-nodejs');
+
 var successFailureRedirects = { 
 		 successRedirect: '/',
          failureRedirect: '/#login'
@@ -64,6 +68,42 @@ module.exports = function(passport){
 	  passport.authenticate('google', successFailureRedirects)	
 	 );
 	 
+	 
+	router.post('/forgotCredentials', function(req, res){
+		// find user by email
+	 	var query = { email : req.body.email };
+	 	
+	 	User.findOne(query, function(err, user){
+	 	if (err) {
+	 		throw err;
+	 	} else {
+	 		
+	 		// after user is found, send user as response
+	 		res.send({ user : user});}
+	 	
+	    })
+	    
+	});
+	
+	router.post('/newPassword', function(req, res){
+
+		// after user is found by email, find it using the username and update the old password.
+	 	var query = { username : req.body.username };
+	 	// find and update old password, hash password are one way password, cant not be coverted to text after created
+	 	// can only be replaced.
+	 	User.findOneAndUpdate(query, { $set: { password: createHash(req.body.password)} }, function(err, user){
+	 	
+	 	if (err) {
+	 		throw err;
+	 	} else {
+	 		
+	 		// send user after new password is created.
+	 		res.send({ user : user });}
+	 	
+	    })
+	    
+	});	
+	 
 	//log out
 	router.get('/signout', function(req, res) {
 		req.logout();
@@ -71,4 +111,9 @@ module.exports = function(passport){
 	});	 
 	
 	return router;
+};
+
+// Generates hash using bCrypt
+var createHash = function (password) {
+	return bCrypt.hashSync(password, bCrypt.genSaltSync(10), null);
 };

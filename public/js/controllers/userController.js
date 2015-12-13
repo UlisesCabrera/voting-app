@@ -30,6 +30,8 @@ angular.module('UserModule', ['UsersState'])
 
 	    	} else {
 	    		
+	    		// after a succesful login send user to home page,
+	    		// and assign it as current user.	
 	    		$rootScope.current_user = data.user;
 	    		$location.path('/');	
 	    	}
@@ -43,11 +45,49 @@ angular.module('UserModule', ['UsersState'])
 	    		$scope.error_message = "User already exist";
 	    		
 	    	} else {
+	    		// after a succesful signup send user to home page,
+	    		// and assign it as current user.
 	    		$rootScope.current_user = data.user;
 	    		$location.path('/');	
 	    	}
 	    });
 	   }
+	   
+	   $scope.forgotCredentials = function() {
+	   	
+		   	$http({
+		   		method: 'POST',
+	    		url: '/auth/forgotCredentials',
+	    		data: $scope.user,
+	    		headers: {'Content-Type': 'application/json'}
+		   	}).success(function(data) {
+				
+				// after user is found by email, ask the user to created a new password
+				// set user name to current user
+		   		$rootScope.current_user = data.user;
+		   		$location.path('/newPassword')
+		   	})
+	   	
+	   }
+	   
+	   $scope.newPassword = function() {
+	   		// assign current user to user object in order to be used as a query to update password
+	   		$scope.user.username = $rootScope.current_user.username;
+	   		
+		   	$http({
+		   		method: 'POST',
+	    		url: '/auth/newPassword',
+	    		data: $scope.user,
+	    		headers: {'Content-Type': 'application/json'}
+		   	}).success(function(data) {
+		   		
+		   		// after new password is created send user to home page
+		   		// and keep user as current user
+		   		$rootScope.current_user = data.user;
+		   		$location.path('/')
+		   	})
+	   	
+	   }	   
 	   
 		// gets current local user 
 	    var getLocalUser = function() {

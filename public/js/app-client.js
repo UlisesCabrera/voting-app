@@ -16,6 +16,15 @@ angular.module('Voting-Poll', ['ngRoute', 'UserModule', 'TimelineModule','ngMess
 		.when('/signup', {
 			templateUrl: './partials/register.html',
 			controller: 'UserController'
+		})
+		.when('/forgotCredentials', {
+			templateUrl: './partials/forgotCredentials.html',
+			controller: 'UserController'
+		})
+		
+		.when('/newPassword', {
+			templateUrl: './partials/newPassword.html',
+			controller: 'UserController'
 		});
 });
 
