@@ -5,6 +5,11 @@ var successFailureRedirects = {
          failureRedirect: '/#login'
 };
 
+var localFailureSuccessRedirects = {
+		successRedirect: '/auth/success',
+		failureRedirect: '/auth/failure'
+}
+
 module.exports = function(passport){
 	
 	//sends successful login state back to angular
@@ -18,16 +23,10 @@ module.exports = function(passport){
 	});
 
 	//log in local
-	router.post('/login', passport.authenticate('login', {
-		successRedirect: '/auth/success',
-		failureRedirect: '/auth/failure'
-	}));
+	router.post('/login', passport.authenticate('login', localFailureSuccessRedirects));
 
 	//sign up local
-	router.post('/signup', passport.authenticate('signup', {
-		successRedirect: '/auth/success',
-		failureRedirect: '/auth/failure'
-	}));
+	router.post('/signup', passport.authenticate('signup', localFailureSuccessRedirects));
 	
 	// route for twitter authentication and login
 	router.get('/twitter', passport.authenticate('twitter'));
