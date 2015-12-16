@@ -16,6 +16,19 @@ var localFailureSuccessRedirects = {
 
 module.exports = function(passport){
 	
+	// will be used by the client to check if the user is logged in.
+	router.get('/userState', function(req, res){
+		
+		// if the user is not null return success
+		if (req.user){
+			res.send({state:'success'});
+		// if not user are available retunr failure	
+		} else {
+			res.send({state:'failure'});	
+		}
+		
+	})
+	
 	//sends successful login state back to angular
 	router.get('/failure', function(req, res){
 		res.send({state: 'failure', user: null});
@@ -70,6 +83,7 @@ module.exports = function(passport){
 	 
 	 
 	router.post('/forgotCredentials', function(req, res){
+		
 		// find user by email
 	 	var query = { email : req.body.email };
 	 	
@@ -97,17 +111,21 @@ module.exports = function(passport){
 	 		throw err;
 	 	} else {
 	 		
-	 		// send user after new password is created.
-	 		res.send({ user : user });}
-	 	
-	    })
+ 		// send user after new password is created.
+ 		res.send({ user : user });}
+ 	
+    	})
 	    
 	});	
 	 
 	//log out
 	router.get('/signout', function(req, res) {
-		req.logout();
-		res.redirect('/');
+		
+		// only works if there an actual user logged in.
+		if (req.user) {
+			req.logout();
+			res.redirect('/');
+		}
 	});	 
 	
 	return router;

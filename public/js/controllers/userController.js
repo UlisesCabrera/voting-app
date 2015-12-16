@@ -17,7 +17,6 @@ angular.module('UserModule', ['UsersState'])
 	    $scope.getCurrentUser = function() {
 	    	return getLocalUser() || getSocialUser();
 	    } 
-	     
 	    
 	   /* implementing the login and signup features on angular 
 	   *  in order to have more control 

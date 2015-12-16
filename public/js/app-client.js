@@ -1,21 +1,50 @@
 angular.module('Voting-Poll', ['ngRoute', 'UserModule', 'TimelineModule','ngMessages']).run(function($rootScope){
 	$rootScope.current_user = '';
+	$rootScope.getRootUser = function() {
+		return $rootScope.current_user;
+	}
 })
 .config(function($routeProvider, $locationProvider){
 	$routeProvider
-		//the login display
 		.when('/login', {
 			templateUrl: './partials/login.html',
-			controller: 'UserController'
+			controller: 'UserController',
+			resolve : {
+				userState : function($http, $location){
+					$http.get('auth/userState').success(function(data){
+						if(data.state === "success") {
+							$location.path('/profile');
+						}
+					})
+				}
+			}
 		})
 		.when('/profile/', {
 			templateUrl: './partials/profile.html',
-			controller: 'UserController'
+			controller: 'UserController',
+			resolve : {
+				userState : function($http, $location){
+					$http.get('auth/userState').success(function(data){
+						if(data.state === "failure") {
+							$location.path('/login');
+						}
+					})
+				}
+			}
 		})		
-		//the signup display
+		
 		.when('/signup', {
 			templateUrl: './partials/register.html',
-			controller: 'UserController'
+			controller: 'UserController',
+			resolve : {
+				userState : function($http, $location){
+					$http.get('auth/userState').success(function(data){
+						if(data.state === "success") {
+							$location.path('/profile');
+						}
+					})
+				}
+			}			
 		})
 		.when('/forgotCredentials', {
 			templateUrl: './partials/forgotCredentials.html',
@@ -25,6 +54,9 @@ angular.module('Voting-Poll', ['ngRoute', 'UserModule', 'TimelineModule','ngMess
 		.when('/newPassword', {
 			templateUrl: './partials/newPassword.html',
 			controller: 'UserController'
+		})
+		.otherwise({
+		 	redirectTo: "/"
 		});
 });
 

@@ -5,7 +5,7 @@ var router = express.Router();
 router.get('/', function(req, res, next) {
   
 if (req.user) {
-    // if user name has a last name
+    // if user name came from social media with a last name
     if(req.user.username.split(' ').length > 1) {
      //format the username with first letter capitalized
      var usernameStyled =  function() {
