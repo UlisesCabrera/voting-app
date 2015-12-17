@@ -1,4 +1,13 @@
-<div class="col-xs-12 col-sm-6 col-sm-offset-3">
-    <h1 class="text-center">{{ getCurrentUser().username }}</h1>
-    <p>Join: {{getCurrentUser().created_at | date }}</p>
+<div class="col-xs-12 col-sm-6 col-sm-offset-3 text-center">
+    <h1>{{ getCurrentUser().username }} <br><small>Join: {{getCurrentUser().created_at | date }}</small></h1>
+    <h3>Polls created: {{ getCurrentUser().polls_created_count }}</h3>
+    
+    <h4>My Polls:</h4>
+    
+    <div ng-repeat="poll in getCurrentUser().polls_created">
+        <p>{{ poll.title }}</p>
+        <p>{{ poll.choices }}</p>
+        <p>{{ poll.created_at | date }}</p>
+    </div>
+    
 </div>

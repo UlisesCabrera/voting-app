@@ -1,11 +1,12 @@
 angular.module('Voting-Poll', ['ngRoute', 'UserModule', 'TimelineModule','ngMessages']).run(function($rootScope){
 	$rootScope.current_user = '';
-	$rootScope.getRootUser = function() {
-		return $rootScope.current_user;
-	}
 })
 .config(function($routeProvider, $locationProvider){
 	$routeProvider
+		.when('/', {
+			templateUrl:'./partials/timeline.html',
+			controller: 'TimelineController'
+		})
 		.when('/login', {
 			templateUrl: './partials/login.html',
 			controller: 'UserController',

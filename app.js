@@ -13,11 +13,14 @@ var session = require('express-session');
 
 //database requirements
 require('./models/user.js');
+require('./models/polls.js');
 var mongoose = require('mongoose');
 mongoose.connect("mongodb://localhost:27017/voting-poll");
 
 var authenticate = require('./routes/authenticate.js')(passport);
+var polls = require('./routes/polls.js');
 var routes = require('./routes/index');
+
 
 var app = express();
 
@@ -37,7 +40,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: false
 }));
-app.use(cookieParser());
+app.use(cookieParser('super voting polls'));
 
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -46,6 +49,7 @@ app.use(passport.session());
 
 app.use('/', routes);
 app.use('/auth', authenticate);
+app.use('/poll', polls);
 
 // initialize passport
 var initPassport = require('./config/passport-init');

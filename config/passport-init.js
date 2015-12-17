@@ -21,6 +21,10 @@ module.exports = function(passport) {
   //github strategy
   require("./strategies/github")(passport);  
 
+    
+  //local strategy
+  require("./strategies/local")(passport);  
+
   // Passport needs to be able to serialize and deserialize users to support persistent login sessions
   passport.serializeUser(function(user, done) {
     // tell passport which id to use for user
@@ -45,8 +49,5 @@ module.exports = function(passport) {
     })
 
   });
-  
-  //local strategy
-  require("./strategies/local")(passport);  
   
 };

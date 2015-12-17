@@ -1,0 +1,23 @@
+<div class="col-xs-12">
+	<form name="newPollForm" class="form-auth" ng-submit="newPoll()" required>
+		<h2 class="text-center">Create New Poll</h2>
+		<p class="text-warning">{{errorPollMessage}}</p>
+		<div class="form-group" ng-class="{ 'has-error': !newPollForm.title.$pristine && newPollForm.title.$invalid }">
+			<label for="title" class="sr-only">Title</label>		
+			<input type="title" name="title" ng-minlength="4" ng-model="poll.title" placeholder="Poll Title" class="form-control" required>
+			<div ng-messages="newPollForm.title.$error" ng-if="!newPollForm.title.$pristine">
+			    <p ng-message="minlength">The title is too short.</p>
+			    <p ng-message="required">The tile is required.</p>
+			</div>			
+		</div>
+		<div class="form-group" ng-class="{ 'has-error': !newPollForm.title.$pristine && newPollForm.choiceName.$invalid }">
+			<label for="choiceName" class="sr-only">Choice</label>
+			<input type="choiceName" name="choiceName" ng-minlength="1" ng-model="poll.choiceName" placeholder="Choice" class="form-control" required>
+			<div ng-messages="newPollForm.choiceName.$error" ng-if="!newPollForm.title.$pristine">
+			    <p ng-message="minlength">Your choice name is too short.</p>
+			    <p ng-message="required">choice name is required.</p>
+			</div>				
+		</div>
+		<input type="submit" value="New Poll" class="btn btn-primary register-btn"/>
+	</form>
+</div>

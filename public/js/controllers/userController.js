@@ -12,6 +12,7 @@ angular.module('UserModule', ['UsersState'])
 	        Authentication.user = null;
 	        $rootScope.current_user = '';
 	        $scope.getCurrentUser();
+	        $location.path('/');
 	     }
 	    
 	    $scope.getCurrentUser = function() {

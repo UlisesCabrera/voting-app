@@ -3,7 +3,7 @@ var mongoose = require('mongoose');
 var choicesSchema = new mongoose.Schema({
     choiceName : {type: String , required: true},
     voteBy : [String],
-    votes: Number
+    votes : {type: Number, default: 0}
 });
 
 var pollSchema = new mongoose.Schema({
@@ -11,8 +11,9 @@ var pollSchema = new mongoose.Schema({
 	title: {type: String , required: true}, //hash created from password
 	created_at: {type: Date, default: Date.now},
 	created_by: String,
-	choices : {type: [choicesSchema], required: true}
+	choices: String
+	//choices : {type: [choicesSchema], required: true}
 });
 
 // declare a model called Polls Which has schema pollSchema with choicesSchema embedded
-mongoose.model("Polls", pollSchema);
+mongoose.model("Poll", pollSchema);
