@@ -1,0 +1,34 @@
+{
+  "name": "voting-app",
+  "description": "first basejump from fcc",
+  "main": "app.js",
+  "authors": [
+    "Ulises Cabrera <ucabrera@outlook.com>"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "express",
+    "node",
+    "angular",
+    "mongo",
+    "mean",
+    "javascript"
+  ],
+  "homepage": "https://github.com/UlisesCabrera/voting-app",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/vendor",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.6",
+    "angular": "~1.4.8",
+    "angular-route": "~1.4.8",
+    "angular-messages": "~1.4.8",
+    "font-awesome": "~4.5.0"
+  }
+}
