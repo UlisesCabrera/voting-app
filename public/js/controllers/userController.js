@@ -55,13 +55,8 @@ angular.module('UserModule', ['UsersState'])
 	   
 	   $scope.forgotCredentials = function() {
 	   	
-		   	$http({
-		   		method: 'POST',
-	    		url: '/auth/forgotCredentials',
-	    		data: $scope.user,
-	    		headers: {'Content-Type': 'application/json'}
-		   	}).success(function(data) {
-				
+		   	$http.get('/auth/forgotCredentials', $scope.user).success(function(data) {
+		   		
 				// after user is found by email, ask the user to created a new password
 				// set user name to current user
 		   		$rootScope.current_user = data.user;
@@ -75,7 +70,7 @@ angular.module('UserModule', ['UsersState'])
 	   		$scope.user.username = $rootScope.current_user.username;
 	   		
 		   	$http({
-		   		method: 'POST',
+		   		method: 'PUT',
 	    		url: '/auth/newPassword',
 	    		data: $scope.user,
 	    		headers: {'Content-Type': 'application/json'}

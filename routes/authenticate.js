@@ -82,7 +82,7 @@ module.exports = function(passport){
 	 );
 	 
 	 
-	router.post('/forgotCredentials', function(req, res){
+	router.get('/forgotCredentials', function(req, res){
 		
 		// find user by email
 	 	var query = { email : req.body.email };
@@ -99,7 +99,7 @@ module.exports = function(passport){
 	    
 	});
 	
-	router.post('/newPassword', function(req, res){
+	router.put('/newPassword', function(req, res){
 
 		// after user is found by email, find it using the username and update the old password.
 	 	var query = { username : req.body.username };

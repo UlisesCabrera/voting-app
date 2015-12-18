@@ -34,17 +34,4 @@ angular.module('TimelineModule', ['UsersState'])
     //$http.get('/poll/currentpolls').success(function(data){
              
     //});
-
-
-
-	// gets current local user 
-    var getLocalUser = function() {
-    	return $rootScope.current_user;
-    }
-    
-    // gets current social media signed in user 
-    var getSocialUser = function() {
-        return Authentication.user ? Authentication.user : null;
-    }
-    
 }]);

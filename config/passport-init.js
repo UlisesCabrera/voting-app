@@ -21,7 +21,6 @@ module.exports = function(passport) {
   //github strategy
   require("./strategies/github")(passport);  
 
-    
   //local strategy
   require("./strategies/local")(passport);  
 

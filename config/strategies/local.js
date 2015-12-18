@@ -30,7 +30,6 @@ module.exports = function (passport) {
  				
 				// successfully signed in
 				console.log('successfully signed in');
-				req.user = user;
 				return done(null, user);
 
 			});
@@ -70,7 +69,7 @@ module.exports = function (passport) {
 					}
 					console.log(" sucessfully signed up user " + user.username);
 				});
-				req.user = user;
+				
 				return done(null, user)
 
 			});
