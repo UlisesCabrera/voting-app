@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 
 var userSchema = new mongoose.Schema({
 	username: {type: String , required: true},
-	email: String,
+	email: {type: String , unique: true},
 	password: {type: String , required: true}, //hash created from password
 	created_at: {type: Date, default: Date.now},
 	polls_created : Array,

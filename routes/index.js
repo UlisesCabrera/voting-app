@@ -22,7 +22,7 @@ if (req.user) {
   
 
 }
- console.log("from index.js" + req.user);
+
   res.render('index', { 
       title: 'Voting App',
       user: JSON.stringify(req.user)
@@ -30,4 +30,3 @@ if (req.user) {
 });
 
 module.exports = router;
-

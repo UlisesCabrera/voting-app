@@ -1,5 +1,6 @@
 angular.module('Voting-Poll', ['ngRoute', 'UserModule', 'TimelineModule','ngMessages']).run(function($rootScope){
-	$rootScope.current_user = '';
+	// will be used to temporarly save the username when recovering password
+	$rootScope.temp_user = '';
 })
 .config(function($routeProvider, $locationProvider){
 	$routeProvider
@@ -11,6 +12,7 @@ angular.module('Voting-Poll', ['ngRoute', 'UserModule', 'TimelineModule','ngMess
 			templateUrl: './partials/login.html',
 			controller: 'UserController',
 			resolve : {
+				// checks for userstate before granting access to this route
 				userState : function($http, $location){
 					$http.get('auth/userState').success(function(data){
 						if(data.state === "success") {
@@ -24,6 +26,7 @@ angular.module('Voting-Poll', ['ngRoute', 'UserModule', 'TimelineModule','ngMess
 			templateUrl: './partials/profile.html',
 			controller: 'UserController',
 			resolve : {
+				// checks for userstate before granting access to this route
 				userState : function($http, $location){
 					$http.get('auth/userState').success(function(data){
 						if(data.state === "failure") {
@@ -38,6 +41,7 @@ angular.module('Voting-Poll', ['ngRoute', 'UserModule', 'TimelineModule','ngMess
 			templateUrl: './partials/register.html',
 			controller: 'UserController',
 			resolve : {
+				// checks for userstate before granting access to this route
 				userState : function($http, $location){
 					$http.get('auth/userState').success(function(data){
 						if(data.state === "success") {

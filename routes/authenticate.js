@@ -9,11 +9,6 @@ var successFailureRedirects = {
          failureRedirect: '/#login'
 };
 
-var localFailureSuccessRedirects = {
-		successRedirect: '/auth/success',
-		failureRedirect: '/auth/failure'
-}
-
 module.exports = function(passport){
 	
 	// will be used by the client to check if the user is logged in.
@@ -33,17 +28,18 @@ module.exports = function(passport){
 	router.get('/failure', function(req, res){
 		res.send({state: 'failure', user: null});
 	});
-	
-	//sends successful login state back to angular
-	router.get('/success', function(req, res){
-		res.send({state: 'success', user: req.user ? req.user : null});
-	});
 
 	//log in local
-	router.post('/login', passport.authenticate('login', localFailureSuccessRedirects));
+	router.post('/login', passport.authenticate('login', {
+				 successRedirect: '/',
+				 failureRedirect: '/auth/failure'
+	}));
 
 	//sign up local
-	router.post('/signup', passport.authenticate('signup', localFailureSuccessRedirects));
+	router.post('/signup', passport.authenticate('signup', {
+				 successRedirect: '/',
+				 failureRedirect: '/auth/failure'
+	}));
 	
 	// route for twitter authentication and login
 	router.get('/twitter', passport.authenticate('twitter'));
@@ -82,20 +78,22 @@ module.exports = function(passport){
 	 );
 	 
 	 
-	router.get('/forgotCredentials', function(req, res){
+	router.post('/forgotCredentials', function(req, res){
 		
 		// find user by email
 	 	var query = { email : req.body.email };
 	 	
 	 	User.findOne(query, function(err, user){
 	 	if (err) {
-	 		throw err;
-	 	} else {
+	 		console.log('error finding user with email ' + req.body.email )
+		 } else {
+		 		console.log(user);
+		 		
+		 		// after user is found, send user as response
+		 		res.send({ user : user});
 	 		
-	 		// after user is found, send user as response
-	 		res.send({ user : user});}
-	 	
-	    })
+	 		}
+	    });
 	    
 	});
 	

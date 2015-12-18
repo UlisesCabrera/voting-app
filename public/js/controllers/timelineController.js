@@ -5,16 +5,12 @@ angular.module('TimelineModule', ['UsersState'])
     
     $scope.poll = {title:'', choiceName: ''};
             
-    
     $scope.newPoll = function() {
       $http.post('/poll/newpoll', $scope.poll).success(function(data){
          if (data.state === "success") {
-	   		    console.log(data.poll);
-	   		    
 	   		    // updates current user with new poll data
-	   		    if ($rootScope.current_user) {
-	   		        console.log(data.user);
-	   		       $rootScope.current_user = null;
+	   		    if ($rootScope.temp_user) {
+	   		       $rootScope.temp_user = '';
 	   		        Authentication.user = data.user;
 	   		    } else {
 	   		        Authentication.user = data.user;
@@ -26,12 +22,9 @@ angular.module('TimelineModule', ['UsersState'])
 	   		    $scope.poll = {title:'', choiceName: ''};
 	   		    
 	   		} else {
+	   			// error, grab the error message from the response and display it on the form.
 	   		    $scope.errorPollMessage = data.message;
 	   		} 
       });
     }
-    
-    //$http.get('/poll/currentpolls').success(function(data){
-             
-    //});
 }]);

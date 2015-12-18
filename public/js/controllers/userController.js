@@ -1,8 +1,9 @@
 angular.module('UserModule', ['UsersState'])
-	.controller('UserController',['$scope','$http','$location','Authentication','$timeout','$rootScope', 
+	.controller('UserController',['$scope','$http','$location','Authentication','$rootScope', 
 	function($scope, $http, $location, Authentication, $rootScope){
 		// will hold an error message to give feeback to the user
 		$scope.error_message = '';
+		
 		// will hold user information to be send to the server for authentication.
 	    $scope.user = {username: '', password: '', email: ''};
 	 	
@@ -10,13 +11,13 @@ angular.module('UserModule', ['UsersState'])
 	    $scope.signout = function(){
 	        $http.get('/auth/signout');
 	        Authentication.user = null;
-	        $rootScope.current_user = '';
+	        $rootScope.temp_user = '';
 	        $scope.getCurrentUser();
 	        $location.path('/');
 	     }
-	    
+	    // gets current user, either temp or signed in
 	    $scope.getCurrentUser = function() {
-	    	return getLocalUser() || getSocialUser();
+	    	return getTempUser() || getSignedUser();
 	    } 
 	    
 	   /* implementing the login and signup features on angular 
@@ -29,11 +30,10 @@ angular.module('UserModule', ['UsersState'])
 	    		$scope.error_message = "Invalid username or password";
 
 	    	} else {
-	    		
 	    		// after a succesful login send user to home page,
-	    		// and assign it as current user.	
-	    		$rootScope.current_user = data.user;
-	    		$location.path('/');	
+	    		// and refresh the page with the new user	
+	    		$location.path('/');
+	    		window.location.reload();
 	    	}
 	    });
 	   }
@@ -41,57 +41,59 @@ angular.module('UserModule', ['UsersState'])
 	   $scope.signup = function() {
 	   	$http.post('/auth/signup', $scope.user).success(function(data){
 	    	if (data.state === "failure") {
-	    		
-	    		$scope.error_message = "User already exist";
-	    		
+	    		$scope.error_message = "User or email already exist";
 	    	} else {
 	    		// after a succesful signup send user to home page,
-	    		// and assign it as current user.
-	    		$rootScope.current_user = data.user;
-	    		$location.path('/');	
+	    		// and refresh the page with the new user
+	    		$location.path('/');
+	    		window.location.reload();
 	    	}
 	    });
 	   }
 	   
 	   $scope.forgotCredentials = function() {
-	   	
-		   	$http.get('/auth/forgotCredentials', $scope.user).success(function(data) {
-		   		
+		   	$http.post('/auth/forgotCredentials', $scope.user).success(function(data) {
 				// after user is found by email, ask the user to created a new password
-				// set user name to current user
-		   		$rootScope.current_user = data.user;
+				// set user name to temp user
+		   		$rootScope.temp_user = data.user;
 		   		$location.path('/newPassword')
 		   	})
 	   	
 	   }
 	   
 	   $scope.newPassword = function() {
-	   		// assign current user to user object in order to be used as a query to update password
-	   		$scope.user.username = $rootScope.current_user.username;
-	   		
+	   		// assign temp username to user object in order to be used as a query to update password
+	   		$scope.user.username = $rootScope.temp_user.username;
 		   	$http({
 		   		method: 'PUT',
 	    		url: '/auth/newPassword',
 	    		data: $scope.user,
 	    		headers: {'Content-Type': 'application/json'}
-		   	}).success(function(data) {
-		   		
-		   		// after new password is created send user to home page
-		   		// and keep user as current user
-		   		$rootScope.current_user = data.user;
-		   		$location.path('/')
+		   	}).success(function() {
+			   	$http.post('/auth/login', $scope.user).success(function(data){
+			    	if (data.state === "failure") {
+			    		$scope.error_message = "Invalid new password";
+			    	} else {
+			    		
+			    		/* after the password is updated, log in the user,
+			    		*  clear the temp user and refresh the page to get the signed in user
+			    		*/
+			    		$rootScope.temp_user = '';
+			    		$location.path('/');
+			    		window.location.reload();
+			    	}
+			    });
 		   	})
 	   	
 	   }	   
 	   
-		// gets current local user 
-	    var getLocalUser = function() {
-	    	return $rootScope.current_user;
+		// gets current temp user 
+	    var getTempUser = function() {
+	    	return $rootScope.temp_user;
 	    }
 	    
-	    // gets current social media signed in user 
-	    var getSocialUser = function() {
+	    // gets signed in user 
+	    var getSignedUser = function() {
 	        return Authentication.user ? Authentication.user : null;
 	    }	   
-	   
 }]);
