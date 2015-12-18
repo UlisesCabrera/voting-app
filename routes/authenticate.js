@@ -86,12 +86,16 @@ module.exports = function(passport){
 	 	User.findOne(query, function(err, user){
 	 	if (err) {
 	 		console.log('error finding user with email ' + req.body.email )
-		 } else {
+		 } 
+		 else {
+		 	//check if user is found
+		 	if (user) {
 		 		console.log(user);
-		 		
 		 		// after user is found, send user as response
 		 		res.send({ user : user});
-	 		
+		 	} else {
+		 		res.send({state: 'failure', user: null})
+		 	}
 	 		}
 	    });
 	    

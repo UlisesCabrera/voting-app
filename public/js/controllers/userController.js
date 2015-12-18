@@ -53,10 +53,16 @@ angular.module('UserModule', ['UsersState'])
 	   
 	   $scope.forgotCredentials = function() {
 		   	$http.post('/auth/forgotCredentials', $scope.user).success(function(data) {
-				// after user is found by email, ask the user to created a new password
-				// set user name to temp user
-		   		$rootScope.temp_user = data.user;
-		   		$location.path('/newPassword')
+				
+				if (data.state === 'failure') {
+					$scope.error_message = 'User not Found with email ' + $scope.user.email;
+				} else {
+					// after user is found by email, ask the user to created a new password
+					// set user name to temp user
+			   		$rootScope.temp_user = data.user;
+			   		$location.path('/newPassword')
+				}
+
 		   	})
 	   	
 	   }

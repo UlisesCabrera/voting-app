@@ -2,6 +2,7 @@ angular.module('TimelineModule', ['UsersState'])
     .controller('TimelineController',['$scope','$http','Authentication','$rootScope', function($scope, $http, Authentication, $rootScope) {
             
     $scope.errorPollMessage = '';
+    $scope.successPollMessage = '';
     
     $scope.poll = {title:'', choiceName: ''};
             
@@ -9,12 +10,8 @@ angular.module('TimelineModule', ['UsersState'])
       $http.post('/poll/newpoll', $scope.poll).success(function(data){
          if (data.state === "success") {
 	   		    // updates current user with new poll data
-	   		    if ($rootScope.temp_user) {
-	   		       $rootScope.temp_user = '';
-	   		        Authentication.user = data.user;
-	   		    } else {
-	   		        Authentication.user = data.user;
-	   		    }
+	   		    Authentication.user = data.user;
+				$scope.successPollMessage = 'New poll added';
 	   		    
 	   		    // resets poll object, new poll form and errors
 	   		    $scope.errorPollMessage = '';
