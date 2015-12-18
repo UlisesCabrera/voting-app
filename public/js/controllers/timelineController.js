@@ -5,7 +5,7 @@ angular.module('TimelineModule', ['UsersState'])
     $scope.successPollMessage = '';
     
     $scope.poll = {title:'', choiceName: ''};
-            
+  
     $scope.newPoll = function() {
       $http.post('/poll/newpoll', $scope.poll).success(function(data){
          if (data.state === "success") {
@@ -24,4 +24,13 @@ angular.module('TimelineModule', ['UsersState'])
 	   		} 
       });
     }
+    
+    $http.get('/poll/').success(function(data){
+    	if (data.state === 'success') {
+    		$scope.polls = data.polls;
+    	} else {
+    		$scope.displayingPollsError = data.message;
+    	}
+    })
+    
 }]);

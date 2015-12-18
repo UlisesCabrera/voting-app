@@ -11,11 +11,33 @@ function ensureAuthenticated(req, res, next) {
     res.send({message:"not authorized"})
 }
 
+// Getting all POLLS
+router.get('/', function(req,res){
+    /*
+    * Stage 1: find all polls
+    */
+    Poll.find({}, function(err, polls){
+            /*
+            * Stage 2: check for errors
+            */
+       if (err) {
+           console.log('error getting all polls' + err);
+           res.send({state: 'failure', message:'error getting polls from server', polls: null});
+       } else {
+            /*
+            * Stage 3: send back polls array object
+            */
+           res.send({state: 'success', message:'sucessfully got all polls', polls: polls});
+       }
+    });
+    
+});
+
+// CREATING NEW POLLS
 /*
 * Stage 1: check if user is authenticated
 */
 router.post('/newpoll', ensureAuthenticated, function(req, res){
-    
     /*
     * Stage 2: find if there is a poll with the same name
     */
