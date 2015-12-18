@@ -12,6 +12,9 @@ angular.module('TimelineModule', ['UsersState'])
 	   		    // updates current user with new poll data
 	   		    Authentication.user = data.user;
 				$scope.successPollMessage = 'New poll added';
+				console.log(data.newPoll);
+				// pushes new poll to the current array of polls
+				$scope.polls.push(data.poll);
 	   		    
 	   		    // resets poll object, new poll form and errors
 	   		    $scope.errorPollMessage = '';
@@ -24,13 +27,13 @@ angular.module('TimelineModule', ['UsersState'])
 	   		} 
       });
     }
-    
+
     $http.get('/poll/').success(function(data){
     	if (data.state === 'success') {
     		$scope.polls = data.polls;
     	} else {
     		$scope.displayingPollsError = data.message;
     	}
-    })
-    
+    })        
+
 }]);

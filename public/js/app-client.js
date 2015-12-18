@@ -1,4 +1,4 @@
-angular.module('Voting-Poll', ['ngRoute', 'UserModule', 'TimelineModule','ngMessages']).run(function($rootScope){
+angular.module('Voting-Poll', ['ngRoute', 'UserModule', 'TimelineModule','SinglePollModule','ngMessages']).run(function($rootScope){
 	// will be used to temporarly save the username when recovering password
 	$rootScope.temp_user = '';
 })
@@ -7,6 +7,10 @@ angular.module('Voting-Poll', ['ngRoute', 'UserModule', 'TimelineModule','ngMess
 		.when('/', {
 			templateUrl:'./partials/timeline.html',
 			controller: 'TimelineController'
+		})
+		.when('/poll/:title', {
+			templateUrl:'./partials/singlePoll.html',
+			controller: 'SinglePollController'
 		})
 		.when('/login', {
 			templateUrl: './partials/login.html',

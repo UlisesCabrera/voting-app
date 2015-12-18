@@ -27,7 +27,41 @@ router.get('/', function(req,res){
             /*
             * Stage 3: send back polls array object
             */
-           res.send({state: 'success', message:'sucessfully got all polls', polls: polls});
+            if (polls) {
+                res.send({state: 'success', message:'sucessfully got all polls', polls: polls});
+            } else {
+                res.send({state: 'failure', message:'did not find polls', polls: null});
+            }
+       }
+    });
+    
+});
+
+// Getting single POLL
+router.get('/:title', function(req,res){
+    /*
+    * Stage 1: construct query
+    */
+    var query = {title: req.params.title};
+    /*
+    * Stage 2: perform a findone search on polls data base
+    */
+    Poll.findOne(query, function(err, poll){
+            /*
+            * Stage 3: check for errors
+            */
+       if (err) {
+           console.log('error getting poll' + err);
+           res.send({state: 'failure', message:'error getting polls from server', poll: null});
+       } else {
+            /*
+            * Stage 3: send back poll 
+            */
+            if (poll) {
+                 res.send({state: 'success', message:'sucessfully got all polls', poll: poll});
+            } else {
+                res.send({state: 'failure', message:'did not find poll', poll: null});
+            }
        }
     });
     
