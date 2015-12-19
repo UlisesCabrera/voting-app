@@ -1,139 +1,72 @@
 var express = require('express');
 var router = express.Router();
-var mongoose = require('mongoose');
-var User = mongoose.model('User');
-var bCrypt = require('bcrypt-nodejs');
-
-var successFailureRedirects = { 
-		 successRedirect: '/',
-         failureRedirect: '/#login'
-};
+var authCtrl =  require("../controllers/authenticateController");
 
 module.exports = function(passport){
 	
-	// will be used by the client to check if the user is logged in.
-	router.get('/userState', function(req, res){
-		
-		// if the user is not null return success
-		if (req.user){
-			res.send({state:'success'});
-		// if not user are available retunr failure	
-		} else {
-			res.send({state:'failure'});	
-		}
-		
-	})
+	/*
+	*
+	* LOCAL AUTH ROUTES 
+	*
+	*/
 	
-	//sends successful login state back to angular
-	router.get('/failure', function(req, res){
-		res.send({state: 'failure', user: null});
-	});
-
 	//log in local
-	router.post('/login', passport.authenticate('login', {
-				 successRedirect: '/',
-				 failureRedirect: '/auth/failure'
-	}));
-
+	router.post('/login', passport.authenticate('login', authCtrl.localLoginLogic));
 	//sign up local
-	router.post('/signup', passport.authenticate('signup', {
-				 successRedirect: '/',
-				 failureRedirect: '/auth/failure'
-	}));
+	router.post('/signup', passport.authenticate('signup', authCtrl.localLoginLogic));
+	// forgot crendetials route, find user name with email provided
+	router.post('/forgotCredentials', authCtrl.findUserWithEmail);
+	// updates password of user found by email
+	router.put('/newPassword', authCtrl.updatePassword);
 	
-	// route for twitter authentication and login
+	/*
+	*
+	* SOCIAL MEDIA AUTH ROUTES 
+	*
+	*/
+	
+	// TWITTER
 	router.get('/twitter', passport.authenticate('twitter'));
-	 
 	router.get('/twitter/callback', 
-	  passport.authenticate('twitter', successFailureRedirects)
+	  passport.authenticate('twitter', authCtrl.socialLoginLogic)
 	);
 
-	// route for linkedin authentication and login
+	// LINKEDIN
 	router.get('/linkedin', passport.authenticate('linkedin'));
-	 
 	router.get('/linkedin/callback', 
-	  passport.authenticate('linkedin', successFailureRedirects)
-	);		
-	
-	// route for facebook authentication and login
-	router.get('/facebook', passport.authenticate('facebook'));
-	 
-	router.get('/facebook/callback',
-	  passport.authenticate('facebook', successFailureRedirects)
+	  passport.authenticate('linkedin', authCtrl.socialLoginLogic)
 	);
 	
-	// route for github authentication and login
+	// FACEBOOK
+	router.get('/facebook', passport.authenticate('facebook'));
+	router.get('/facebook/callback',
+	  passport.authenticate('facebook', authCtrl.socialLoginLogic)
+	);
+	
+	// GITHUB
 	router.get('/github', passport.authenticate('github'));
-	 
 	router.get('/github/callback', 
-	  passport.authenticate('github', successFailureRedirects)
-	);	
-	
-	// route for google authentication and login
-	router.get('/google',
-	  passport.authenticate('google', { scope: 'https://www.googleapis.com/auth/plus.login' }));
-	
+	  passport.authenticate('github', authCtrl.socialLoginLogic)
+	);
+	// GOOGLE
+	router.get('/google', passport.authenticate('google', 
+		{ scope: 'https://www.googleapis.com/auth/plus.login' }));
 	router.get('/google/callback', 
-	  passport.authenticate('google', successFailureRedirects)	
+	  passport.authenticate('google', authCtrl.socialLoginLogic)	
 	 );
 	 
+	/*
+	*
+	* GENERAL USE ROUTES
+	*
+	*/	 
 	 
-	router.post('/forgotCredentials', function(req, res){
-		
-		// find user by email
-	 	var query = { email : req.body.email };
-	 	
-	 	User.findOne(query, function(err, user){
-	 	if (err) {
-	 		console.log('error finding user with email ' + req.body.email )
-		 } 
-		 else {
-		 	//check if user is found
-		 	if (user) {
-		 		console.log(user);
-		 		// after user is found, send user as response
-		 		res.send({ user : user});
-		 	} else {
-		 		res.send({state: 'failure', user: null})
-		 	}
-	 		}
-	    });
-	    
-	});
-	
-	router.put('/newPassword', function(req, res){
-
-		// after user is found by email, find it using the username and update the old password.
-	 	var query = { username : req.body.username };
-	 	// find and update old password, hash password are one way password, cant not be coverted to text after created
-	 	// can only be replaced.
-	 	User.findOneAndUpdate(query, { $set: { password: createHash(req.body.password)} }, function(err, user){
-	 	
-	 	if (err) {
-	 		throw err;
-	 	} else {
-	 		
- 		// send user after new password is created.
- 		res.send({ user : user });}
- 	
-    	})
-	    
-	});	
-	 
+	//sends failure login state back to angular
+	router.get('/failure', authCtrl.failure);
+	// will be used by the client to check if the user is logged in.
+	router.get('/userState', authCtrl.checkUserState)
 	//log out
-	router.get('/signout', function(req, res) {
-		
-		// only works if there an actual user logged in.
-		if (req.user) {
-			req.logout();
-			res.redirect('/');
-		}
-	});	 
+	router.get('/signout', authCtrl.logout);	 
 	
 	return router;
-};
-
-// Generates hash using bCrypt
-var createHash = function (password) {
-	return bCrypt.hashSync(password, bCrypt.genSaltSync(10), null);
 };
