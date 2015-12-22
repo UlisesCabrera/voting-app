@@ -26,9 +26,9 @@ angular.module('Voting-Poll', ['ngRoute', 'UserModule', 'TimelineModule','Single
 				}
 			}
 		})
-		.when('/profile/', {
+		.when('/profile/:id', {
 			templateUrl: './partials/profile.html',
-			controller: 'UserController',
+			controller: 'UserPollsController',
 			resolve : {
 				// checks for userstate before granting access to this route
 				userState : function($http, $location){

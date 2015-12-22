@@ -1,5 +1,5 @@
 angular.module('TimelineModule', ['UsersState'])
-    .controller('TimelineController',['$scope','$http','Authentication','$rootScope', function($scope, $http, Authentication, $rootScope) {
+    .controller('TimelineController',['$scope','$http','Authentication','$rootScope','$routeParams', function($scope, $http, Authentication, $rootScope, $routeParams) {
             
     $scope.errorPollMessage = '';
     $scope.successPollMessage = '';
@@ -26,7 +26,7 @@ angular.module('TimelineModule', ['UsersState'])
 	   		    $scope.errorPollMessage = data.message;
 	   		} 
       });
-    }
+    };
 
     $http.get('/poll/').success(function(data){
     	if (data.state === 'success') {
@@ -34,6 +34,18 @@ angular.module('TimelineModule', ['UsersState'])
     	} else {
     		$scope.displayingPollsError = data.message;
     	}
-    })        
+    });
+    
+    $scope.delete = function(title, index) {
+    	var url =  '/poll/delete/' + title;
 
+    	$http.delete(url).then(function(data){
+    		if (!data.state === 'success') {
+    			$scope.errorMessageDeletingPoll = data.message;
+    		} else {
+    			$scope.polls.splice(index, 1);
+    		}
+    	});
+    };
+    
 }]);

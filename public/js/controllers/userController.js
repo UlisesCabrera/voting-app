@@ -1,12 +1,11 @@
 angular.module('UserModule', ['UsersState'])
-	.controller('UserController',['$scope','$http','$location','Authentication','$rootScope', 
-	function($scope, $http, $location, Authentication, $rootScope){
+	.controller('UserController',['$scope','$http','$location','Authentication','$routeParams', '$rootScope', 
+	function($scope, $http, $location, Authentication, $rootScope, $routeParams){
 		// will hold an error message to give feeback to the user
 		$scope.error_message = '';
-		
 		// will hold user information to be send to the server for authentication.
 	    $scope.user = {username: '', password: '', email: ''};
-	 	
+	    
 	 	// signout for all users (social or local)
 	    $scope.signout = function(){
 	        $http.get('/auth/signout');
@@ -91,7 +90,7 @@ angular.module('UserModule', ['UsersState'])
 			    });
 		   	})
 	   	
-	   }	   
+	   }
 	   
 		// gets current temp user 
 	    var getTempUser = function() {
@@ -102,4 +101,27 @@ angular.module('UserModule', ['UsersState'])
 	    var getSignedUser = function() {
 	        return Authentication.user ? Authentication.user : null;
 	    }	   
+}]).controller('UserPollsController',['$scope', '$routeParams', '$http', function($scope, $routeParams, $http){
+    	var url = '/poll/userPolls/' + $routeParams.id;
+		$scope.profilePolls = [];
+		
+		$http.get(url).success(function(data){
+	    		if (data.state === "success") {
+	    			$scope.profilePolls = data.polls;
+	    		} else {
+	    			console.log("error getting user poll");
+	    		}	
+	    });
+	    
+	    $scope.delete = function(title, index) {
+	    	var url =  '/poll/delete/' + title;
+	    	$http.delete(url).then(function(data){
+	    		if (!data.state === 'success') {
+	    			$scope.errorMessageDeletingPoll = data.message;
+	    		} else {
+	    			$scope.profilePolls.splice(index, 1);
+	    		}
+	    	});
+	    };
+    
 }]);

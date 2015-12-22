@@ -37,7 +37,7 @@ module.exports = function(passport) {
             user.username = profile.displayName;
             user.password = profile.id;
             // dont want to save user email from social media
-            user.email = '';
+            user.email = null;
             // set all of the facebook information in our user model
 
 

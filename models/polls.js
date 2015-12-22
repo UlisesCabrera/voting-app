@@ -8,9 +8,10 @@ var choicesSchema = new mongoose.Schema({
 
 var pollSchema = new mongoose.Schema({
 	route: String,
-	title: {type: String , required: true}, //hash created from password
+	title: {type: String , required: true}, 
 	created_at: {type: Date, default: Date.now},
 	created_by: String,
+	created_by_id : String,
 	choices: String
 	//choices : {type: [choicesSchema], required: true}
 });

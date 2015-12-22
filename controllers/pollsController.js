@@ -49,6 +49,26 @@ exports.read = function(req,res){
     
 };
 
+exports.readUserPolls = function(req, res) {
+    var query = { created_by_id : req.params.id };
+    
+    Poll.find(query, function(err, polls){
+       // Stage 1: check for errors
+       if (err) {
+           console.log('error getting poll' + err);
+           res.send({state: 'failure', message:'error getting polls from server', polls: null});
+       } else {
+            // Stage 2: send back polls 
+            if (polls) {
+                 res.send({state: 'success', message:'sucessfully got all polls', polls: polls});
+            } else {
+                 res.send({state: 'failure', message:'did not find any polls', polls: null});
+            }
+       }
+    });
+    
+};
+
 exports.create =  function(req, res){
     //Stage 1: find if there is a poll with the same name
     Poll.findOne({title: req.body.title}, function(err, poll){
@@ -61,33 +81,32 @@ exports.create =  function(req, res){
                 console.log("Poll already exists with title " + req.body.title);
                 res.send({state: 'failure', message: "Poll already exists with title " + req.body.title});
             } else {
-                //stage 2 : create new poll
                 
+                //stage 2 : create new poll
                 //console.log(req.body);
                 var newPoll = new Poll();
                 //console.log(newPoll);
                 newPoll.title = req.body.title;
                 newPoll.created_by = req.user.username;
                 newPoll.choices = req.body.choiceName;
+                newPoll.created_by_id = req.user.id;
                 newPoll.save(function(err, poll){
                     if (err) {
                         console.log("error saving poll" + err);
                     }
                     console.log('sucessfully save new poll');
                 });
-                //Stage 3 :find user by its unique id and add new poll to his list
+                //Stage 3 :find user by its unique id and increase count of user by 1
                 var query = { _id : req.user.id };
                 User.findByIdAndUpdate(query, {
-                    // push newPoll object to array of polls
-                    $push: { polls_created : newPoll },
                     // increase count of user created polls by 1
                     $inc: { polls_created_count : 1 }
                     }, function(err, user){
                     // if any error log it to the console  and send failure response to the client
                     if (err) {
                         console.log(err);
-                        console.log('error adding poll to user:' + req.user.id);
-                        res.send({state: 'failure', message: "error adding poll to user: " + req.user.username});
+                        console.log('error increasing poll counter to user:' + req.user.id);
+                        res.send({state: 'failure', message: "error increasing poll counter to user: " + req.user.username});
                     } else {
                         // stage 4 : send back updated user and newpoll to the client
                         User.findById(query, function(err, user){
@@ -102,4 +121,53 @@ exports.create =  function(req, res){
             }
         }
     });
+};
+
+exports.delete = function(req, res) {
+    // stage 1:  create query to find poll by title name on poll model
+    // and get the user id in order to perform an update on the polls_created count
+    var query = {title : req.params.title};
+    var userQuery = { _id : req.user.id };
+    // finding poll
+    Poll.findOne(query, function(err, poll){
+        if (err) {
+            console.log("error finding poll to remove " + err );
+        } else {
+            // Stage 2: check if poll is found and check if the username 
+            // trying to delete the poll is the creator of the poll
+            if (poll){
+                if (poll.created_by === req.user.username) {
+                    // stage 3: decrease user poll counter
+                    User.update(userQuery, {
+                        // decrease count of user created polls by 1
+                        $inc: { polls_created_count : -1 }
+                            }, function(err, user){
+                            // if any error log it to the console  and send failure response to the client
+                            if (err) {
+                                console.log(err);
+                                console.log('error decreasing poll counter to user:' + req.user.username);
+                                res.send({state: 'failure', message: "error decreasing poll counter to user: " + req.user.username});
+                            } else {
+                                 console.log('successfully decreased poll counter for user');
+                            }
+                    });                    
+                    // stage 4: delete poll from polls model, send back user and poll deleted
+                    poll.remove(function(err){
+                        if (err) {
+                            console.log('err removing poll from poll model ' + err);
+                        } else {
+                            console.log('successfully remove poll');
+                            res.send({ state: 'success' });
+                        }
+                    });
+                } else {
+                    res.send({state:'failure', message: 'not authorized to delete this poll'});
+                }
+                
+            } else {
+                console.log('poll not found on polls schema');
+                res.send({state:'failure', message: 'poll was not found'});
+            }
+        }
+    })
 };
