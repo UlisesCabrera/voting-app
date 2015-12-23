@@ -15,14 +15,14 @@ var passport = require('passport');
 var session = require('express-session');
 
 //database requirements
-require('./models/user.js');
-require('./models/polls.js');
+require('./models/userModel.js');
+require('./models/pollsModel.js');
 var mongoose = require('mongoose');
 mongoose.connect(process.env.MONGO_URI);
 
-var authenticate = require('./routes/authenticate.js')(passport);
-var polls = require('./routes/polls.js');
-var routes = require('./routes/index');
+var authenticate = require('./routes/authenticateRoute.js')(passport);
+var polls = require('./routes/pollsRoute.js');
+var routes = require('./routes/indexRoute');
 
 
 var app = express();
