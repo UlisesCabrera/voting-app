@@ -1,5 +1,5 @@
-angular.module('SinglePollModule', ['UsersState'])
-    .controller('SinglePollController',['$scope','$http','Authentication','$rootScope','$routeParams', function($scope, $http, Authentication, $rootScope, $routeParams) {
+angular.module('SinglePollModule', ['UsersService'])
+    .controller('SinglePollController',['$scope','$http','UsersSvc','$routeParams', function($scope, $http, UsersSvc, $routeParams) {
             
     $scope.errorPollMessage = '';
     $scope.successPollMessage = '';

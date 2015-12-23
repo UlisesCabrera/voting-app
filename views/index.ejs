@@ -23,9 +23,9 @@
 			<nav class="navbar-fluid navbar-default navbar-fixed-top">
 				<div class="container">
 					<a class="navbar-brand" href="#/"> My Poll App</a>
-					<p class="navbar-right navbar-text" ng-hide="getCurrentUser()"><a href="#/login"><i class="fa fa-sign-in"></i> Login</a></p>
-					<p class="navbar-right navbar-text" ng-show="getCurrentUser()"><a href="#/" ng-click="signout()"><i class="fa fa-sign-out"></i> Logout</a></p>
-					<p class="navbar-right navbar-text" ng-show="getCurrentUser()"><a href="#/profile/{{ getCurrentUser()._id }}"><i class="fa fa-user"></i> Profile</a></p>
+					<p class="navbar-right navbar-text" ng-show="!getCurrentUser() && !isGettingNewPassword()"><a href="#/login"><i class="fa fa-sign-in"></i> Login</a></p>
+					<p class="navbar-right navbar-text" ng-show="getCurrentUser() && !isGettingNewPassword()"><a href="#/" ng-click="signout()"><i class="fa fa-sign-out"></i> Logout</a></p>
+					<p class="navbar-right navbar-text" ng-show="getCurrentUser() && !isGettingNewPassword()"><a href="#/profile/{{ getCurrentUser()._id }}"><i class="fa fa-user"></i> Profile</a></p>
 					<p class="navbar-right navbar-text" ng-show="getCurrentUser()">Hello,  {{ getCurrentUser().username }}</p>
 				</div>
 			</nav>

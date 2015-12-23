@@ -1,7 +1,5 @@
-angular.module('Voting-Poll', ['ngRoute', 'UserModule', 'TimelineModule','SinglePollModule','ngMessages']).run(function($rootScope){
-	// will be used to temporarly save the username when recovering password
-	$rootScope.temp_user = '';
-})
+angular.module('Voting-Poll', ['ngRoute', 'UserModule', 'TimelineModule','SinglePollModule','ngMessages'])
+
 .config(function($routeProvider, $locationProvider){
 	$routeProvider
 		.when('/', {

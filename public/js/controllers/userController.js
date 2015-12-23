@@ -1,30 +1,41 @@
-angular.module('UserModule', ['UsersState'])
-	.controller('UserController',['$scope','$http','$location','Authentication','$routeParams', '$rootScope', 
-	function($scope, $http, $location, Authentication, $rootScope, $routeParams){
+angular.module('UserModule', ['UsersService'])
+	.controller('UserController',['$scope','$http','$location','UsersSvc','$routeParams', 
+	function($scope, $http, $location, UsersSvc, $routeParams){
 		// will hold an error message to give feeback to the user
 		$scope.error_message = '';
 		// will hold user information to be send to the server for authentication.
 	    $scope.user = {username: '', password: '', email: ''};
 	    
+	    $scope.isGettingNewPassword = function() {
+	    	if ($location.url() == '/newPassword'){
+	    		return true;
+	    	} else {
+	    		return false;
+	    	}
+	    };
+	    
+	    
 	 	// signout for all users (social or local)
 	    $scope.signout = function(){
-	        $http.get('/auth/signout');
-	        Authentication.user = null;
-	        $rootScope.temp_user = '';
-	        $scope.getCurrentUser();
-	        $location.path('/');
-	     }
+	        	UsersSvc.signout().then(function(){
+		        	UsersSvc.user = null;
+	        		$scope.getCurrentUser();
+	        		$location.path('/');	
+	        	});
+
+	     };
+	     
 	    // gets current user, either temp or signed in
 	    $scope.getCurrentUser = function() {
-	    	return getTempUser() || getSignedUser();
-	    } 
+	    	return UsersSvc.user ? UsersSvc.user : null;
+	    }; 
 	    
 	   /* implementing the login and signup features on angular 
 	   *  in order to have more control 
        *  on what to display to the user if anything goes wrong 
 	   */
 	   $scope.login = function() {
-	   	$http.post('/auth/login', $scope.user).success(function(data){
+	   	UsersSvc.login($scope.user).success(function(data){
 	    	if (data.state === "failure") {
 	    		$scope.error_message = "Invalid username or password";
 
@@ -35,10 +46,10 @@ angular.module('UserModule', ['UsersState'])
 	    		window.location.reload();
 	    	}
 	    });
-	   }
+	   };
 	   
 	   $scope.signup = function() {
-	   	$http.post('/auth/signup', $scope.user).success(function(data){
+	   	UsersSvc.signup($scope.user).success(function(data){
 	    	if (data.state === "failure") {
 	    		$scope.error_message = "User or email already exist";
 	    	} else {
@@ -48,33 +59,28 @@ angular.module('UserModule', ['UsersState'])
 	    		window.location.reload();
 	    	}
 	    });
-	   }
+	   };
 	   
 	   $scope.forgotCredentials = function() {
-		   	$http.post('/auth/forgotCredentials', $scope.user).success(function(data) {
-				
+		   	UsersSvc.forgotCredentials($scope.user).success(function(data) {
 				if (data.state === 'failure') {
 					$scope.error_message = 'User not Found with email ' + $scope.user.email;
 				} else {
 					// after user is found by email, ask the user to created a new password
 					// set user name to temp user
-			   		$rootScope.temp_user = data.user;
-			   		$location.path('/newPassword')
+			   		UsersSvc.user = data.user;
+			   		$location.path('/newPassword');
 				}
 
-		   	})
+		   	});
 	   	
-	   }
+	   };
 	   
 	   $scope.newPassword = function() {
 	   		// assign temp username to user object in order to be used as a query to update password
-	   		$scope.user.username = $rootScope.temp_user.username;
-		   	$http({
-		   		method: 'PUT',
-	    		url: '/auth/newPassword',
-	    		data: $scope.user,
-	    		headers: {'Content-Type': 'application/json'}
-		   	}).success(function() {
+	   		$scope.user.username = UsersSvc.user.username;
+		   	
+		   	UsersSvc.newPassword($scope.user).success(function() {
 			   	$http.post('/auth/login', $scope.user).success(function(data){
 			    	if (data.state === "failure") {
 			    		$scope.error_message = "Invalid new password";
@@ -83,24 +89,14 @@ angular.module('UserModule', ['UsersState'])
 			    		/* after the password is updated, log in the user,
 			    		*  clear the temp user and refresh the page to get the signed in user
 			    		*/
-			    		$rootScope.temp_user = '';
 			    		$location.path('/');
 			    		window.location.reload();
 			    	}
 			    });
-		   	})
+		   	});
 	   	
-	   }
+	   };
 	   
-		// gets current temp user 
-	    var getTempUser = function() {
-	    	return $rootScope.temp_user;
-	    }
-	    
-	    // gets signed in user 
-	    var getSignedUser = function() {
-	        return Authentication.user ? Authentication.user : null;
-	    }	   
 }]).controller('UserPollsController',['$scope', '$routeParams', '$http', function($scope, $routeParams, $http){
     	var url = '/poll/userPolls/' + $routeParams.id;
 		$scope.profilePolls = [];

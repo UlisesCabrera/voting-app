@@ -44,13 +44,13 @@
 			{{ errorMessageDeletingPoll }}
 		</div>
 		
-		<div class="col-xs-12 col-sm-6 text-center" ng-repeat="poll in polls | orderBy:'-created_at'">
+		<div class="col-xs-12 col-sm-6 text-center" ng-repeat="poll in polls track by poll._id | orderBy:'-created_at'">
 			
 			<h3>{{ poll.title }} <small>by : {{ poll.created_by }}</small></h3>
 			<p>Winner: </p>
 			<p>Total Votes: </p>
 			<a href="#/poll/{{ poll.title }}" class="btn btn-info btn-xs"> See Poll </a>
-			<button ng-show="{{ poll.created_by ===  getCurrentUser().username }}" class="btn btn-danger btn-lg" ng-click="delete(poll.title, $index)">Delete Poll</button>
+			<button ng-if="poll.created_by ===  getCurrentUser().username" class="btn btn-danger btn-lg" ng-click="delete(poll.title, $index)">Delete Poll</button>
 		</div>
 	</div>
 </div>

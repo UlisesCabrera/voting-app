@@ -1,5 +1,5 @@
-angular.module('TimelineModule', ['UsersState'])
-    .controller('TimelineController',['$scope','$http','Authentication','$rootScope','$routeParams', function($scope, $http, Authentication, $rootScope, $routeParams) {
+angular.module('TimelineModule', ['UsersService'])
+    .controller('TimelineController',['$scope','$http','UsersSvc','$routeParams', function($scope, $http, UsersSvc, $routeParams) {
             
     $scope.errorPollMessage = '';
     $scope.successPollMessage = '';
@@ -10,9 +10,8 @@ angular.module('TimelineModule', ['UsersState'])
       $http.post('/poll/newpoll', $scope.poll).success(function(data){
          if (data.state === "success") {
 	   		    // updates current user with new poll data
-	   		    Authentication.user = data.user;
+	   		    UsersSvc.user = data.user;
 				$scope.successPollMessage = 'New poll added';
-				console.log(data.newPoll);
 				// pushes new poll to the current array of polls
 				$scope.polls.push(data.poll);
 	   		    
