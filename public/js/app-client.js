@@ -1,4 +1,4 @@
-angular.module('Voting-Poll', ['ngRoute', 'UserModule', 'TimelineModule','SinglePollModule','ngMessages'])
+angular.module('Voting-Poll', ['ngRoute', 'UserModule', 'TimelineModule','SinglePollModule','ngMessages','UserPollsModule'])
 
 .config(function($routeProvider, $locationProvider){
 	$routeProvider
@@ -16,11 +16,11 @@ angular.module('Voting-Poll', ['ngRoute', 'UserModule', 'TimelineModule','Single
 			resolve : {
 				// checks for userstate before granting access to this route
 				userState : function($http, $location){
-					$http.get('auth/userState').success(function(data){
-						if(data.state === "success") {
+					$http.get('auth/userState').then(function(res){
+						if(res.data.state === "success") {
 							$location.path('/profile');
 						}
-					})
+					});
 				}
 			}
 		})
@@ -30,8 +30,8 @@ angular.module('Voting-Poll', ['ngRoute', 'UserModule', 'TimelineModule','Single
 			resolve : {
 				// checks for userstate before granting access to this route
 				userState : function($http, $location){
-					$http.get('auth/userState').success(function(data){
-						if(data.state === "failure") {
+					$http.get('auth/userState').then(function(res){
+						if(res.data.state === "failure") {
 							$location.path('/login');
 						}
 					})
@@ -45,8 +45,8 @@ angular.module('Voting-Poll', ['ngRoute', 'UserModule', 'TimelineModule','Single
 			resolve : {
 				// checks for userstate before granting access to this route
 				userState : function($http, $location){
-					$http.get('auth/userState').success(function(data){
-						if(data.state === "success") {
+					$http.get('auth/userState').then(function(res){
+						if(res.data.state === "success") {
 							$location.path('/profile');
 						}
 					})
