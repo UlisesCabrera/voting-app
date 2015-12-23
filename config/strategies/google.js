@@ -6,9 +6,9 @@ var User = mongoose.model('User');
 module.exports = function(passport) {
 
   passport.use('google', new GoogleStrategy({
-      clientID: '238372833758-j79k3st95mi5skbrvqn53ukg3h8dknac.apps.googleusercontent.com',
-      clientSecret: '77bF_0uOg64UAHA0aydExXqT',
-      callbackURL: 'https://voting-app-basejump-elgris12.c9users.io/auth/google/callback'
+      clientID: process.env.GOOGLE_ID,
+      clientSecret: process.env.GOOGLE_SECRET,
+      callbackURL: process.env.BASEURL+'auth/google/callback'
     },
 
     // facebook will send back the tokens and profile

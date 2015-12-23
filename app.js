@@ -1,3 +1,6 @@
+// npm module to read .env variables
+require('dotenv').load();
+
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -15,7 +18,7 @@ var session = require('express-session');
 require('./models/user.js');
 require('./models/polls.js');
 var mongoose = require('mongoose');
-mongoose.connect("mongodb://ulisescabrera:mana1234@ds035485.mongolab.com:35485/voting-app-basejump");
+mongoose.connect(process.env.MONGO_URI);
 
 var authenticate = require('./routes/authenticate.js')(passport);
 var polls = require('./routes/polls.js');

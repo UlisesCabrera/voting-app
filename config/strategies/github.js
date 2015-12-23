@@ -6,9 +6,9 @@ var User = mongoose.model('User');
 module.exports = function(passport) {
 
   passport.use('github', new GitHubStrategy({
-      clientID: '00962de3471686393d3c',
-      clientSecret: '879ce1df0eb84ffaf447fc2055319637f984b5f9',
-      callbackURL: 'https://voting-app-basejump-elgris12.c9users.io/auth/github/callback'
+      clientID: process.env.GITHUB_ID,
+      clientSecret: process.env.GITHUB_SECRET,
+      callbackURL: process.env.BASEURL + 'auth/github/callback'
     },
 
     // facebook will send back the tokens and profile

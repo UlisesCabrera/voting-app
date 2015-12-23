@@ -1,14 +1,16 @@
+// npm module to read .env variables
+require('dotenv').load();
+
 var FacebookStrategy = require("passport-facebook").Strategy;
 var bCrypt = require('bcrypt-nodejs');
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
 
 module.exports = function(passport) {
-
   passport.use('facebook', new FacebookStrategy({
-      clientID: '1094695087210363',
-      clientSecret: 'd5aeebcb562907e12bb9eef39619abbb',
-      callbackURL: 'https://voting-app-basejump-elgris12.c9users.io/auth/facebook/callback'
+      clientID: process.env.FB_CLIENT_ID,
+      clientSecret: process.env.FB_CLIENT_SECRET,
+      callbackURL:  process.env.BASEURL + 'auth/facebook/callback'
     },
 
     // facebook will send back the tokens and profile

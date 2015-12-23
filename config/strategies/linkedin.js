@@ -6,9 +6,9 @@ var User = mongoose.model('User');
 module.exports = function(passport) {
 
   passport.use('linkedin', new LinkedInStrategy({
-      consumerKey: '77cqdfa5wcmie6',
-      consumerSecret: '2TF6KApXsJaS8T8e',
-      callbackURL: 'https://voting-app-basejump-elgris12.c9users.io/auth/linkedin/callback'
+      consumerKey: process.env.LINKEDIN_KEY,
+      consumerSecret: process.env.LINKEDIN_SECRET,
+      callbackURL: process.env.BASEURL+'auth/linkedin/callback'
     },
     function(token, tokenSecret, profile, done) {
       console.log(profile);
