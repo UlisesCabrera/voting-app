@@ -44,7 +44,7 @@
 			{{ errorMessageDeletingPoll }}
 		</div>
 		
-		<div class="col-xs-12 col-sm-6 text-center" ng-repeat="poll in polls track by poll._id | orderBy:'-created_at'">
+		<div class="col-xs-12 col-sm-6 text-center" ng-repeat="poll in polls | orderBy:'-created_at'">
 			
 			<h3>{{ poll.title }} <small>by : {{ poll.created_by }}</small></h3>
 			<p>Winner: </p>

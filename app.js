@@ -15,7 +15,7 @@ var session = require('express-session');
 require('./models/user.js');
 require('./models/polls.js');
 var mongoose = require('mongoose');
-mongoose.connect("mongodb://localhost:27017/voting-poll");
+mongoose.connect("mongodb://ulisescabrera:mana1234@ds035485.mongolab.com:35485/voting-app-basejump");
 
 var authenticate = require('./routes/authenticate.js')(passport);
 var polls = require('./routes/polls.js');
