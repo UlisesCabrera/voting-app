@@ -1,19 +1,25 @@
-angular.module('SinglePollModule', ['UsersService'])
-    .controller('SinglePollController',['$scope','$http','UsersSvc','$routeParams', function($scope, $http, UsersSvc, $routeParams) {
-            
+angular.module('SinglePollModule', ['UsersService', 'PollsService'])
+    .controller('SinglePollController',['$scope','$http','UsersSvc','$routeParams','PollsSvc', function($scope, $http, UsersSvc, $routeParams, PollsSvc) {
+    // will display error message here        
     $scope.errorPollMessage = '';
-    $scope.successPollMessage = '';
+    // will hold title params to use on the url
+    var title = $routeParams.title;
     
-    $scope.hello= "hello from single poll and here is the title " + $routeParams.title;
+    //test
+    $scope.hello= "hello from single poll and here is the title " + title;
     
-    var url = '/poll/' + $routeParams.title;
-    
-    $http.get(url).success(function(data){
-    	if (data.state === 'success') {
-    		$scope.poll = data.poll;
-    	} else {
-    		$scope.displayingPollsError = data.message;
-    	}
-    })
-    
+    // gets clicked poll from the server
+    PollsSvc.getSinglePoll(title)
+        .then(
+            function(res){
+            	if (res.data.state === 'success') {
+            		$scope.poll = res.data.poll;
+            	} else {
+            		$scope.errorPollMessage = res.data.message;
+            	}
+            },
+            function(error) {
+	        	$scope.errorPollMessage = 'error getting to the server : ' + error.status + ' ' + error.statusText;
+	        }    
+        );
 }]);

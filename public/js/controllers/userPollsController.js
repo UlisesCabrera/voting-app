@@ -1,13 +1,15 @@
-angular.module('UserPollsModule', [])
-.controller('UserPollsController',['$scope', '$routeParams', '$http', function($scope, $routeParams, $http){
+angular.module('UserPollsModule', ['PollsService'])
+.controller('UserPollsController',['$scope', '$routeParams', '$http','PollsSvc', function($scope, $routeParams, $http, PollsSvc){
+    	// will hold any error message from all the server side comunication
     	$scope.errorMessageProfilePoll = '';
     	
-    	var url = '/poll/userPolls/' + $routeParams.id;
+		// will hold all the user created polls
 		$scope.profilePolls = [];
-		
-		$http.get(url)
+		// gets current user polls by providing user id
+		PollsSvc.getUserPolls($routeParams.id)
 		    .then(
     		    function(res){
+    		        // fills array with user polls
     	    		if (res.data.state === "success") {
     	    			$scope.profilePolls = res.data.polls;
     	    		} else {
@@ -18,10 +20,9 @@ angular.module('UserPollsModule', [])
 	        		$scope.errorMessageProfilePoll = 'error getting to the server : ' + error.status + ' ' + error.statusText;
 	        	}
 	        );
-	    
+	    // deletes clicked poll
 	    $scope.delete = function(title, index) {
-	    	var url =  '/poll/delete/' + title;
-	    	$http.delete(url)
+            PollsSvc.deletePoll(title)
 	    	    .then(
 	    	        function(res){
         	    		if (res.data.state === 'success') {

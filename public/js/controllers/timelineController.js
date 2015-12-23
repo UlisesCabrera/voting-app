@@ -1,5 +1,5 @@
-angular.module('TimelineModule', ['UsersService'])
-    .controller('TimelineController',['$scope','$http','UsersSvc','$routeParams', function($scope, $http, UsersSvc, $routeParams) {
+angular.module('TimelineModule', ['UsersService','PollsService'])
+    .controller('TimelineController',['$scope','$http','UsersSvc','$routeParams','PollsSvc', function($scope, $http, UsersSvc, $routeParams, PollsSvc) {
             
     $scope.errorPollMessage = '';
     $scope.successPollMessage = '';
@@ -8,7 +8,7 @@ angular.module('TimelineModule', ['UsersService'])
     $scope.poll = {title:'', choiceName: ''};
   
     $scope.newPoll = function() {
-      $http.post('/poll/newpoll', $scope.poll)
+      PollsSvc.newPoll($scope.poll)
         .then(
             function(res){
                  if (res.data.state === "success") {
@@ -34,7 +34,7 @@ angular.module('TimelineModule', ['UsersService'])
         );
     };
 
-    $http.get('/poll/')
+    PollsSvc.getAllPolls()
         .then(
             function(res){
             	if (res.data.state === 'success') {
@@ -49,11 +49,9 @@ angular.module('TimelineModule', ['UsersService'])
         );
         
     $scope.delete = function(title, index) {
-    	var url =  '/poll/delete/' + title;
-    	$http.delete(url)
+    	PollsSvc.deletePoll(title)
     	    .then(
     	        function(res){
-            	    console.log(res);
             		if (res.data.state === 'failure') {
             			$scope.errorMessageDeletingPoll = res.data.message;
             		} else {
