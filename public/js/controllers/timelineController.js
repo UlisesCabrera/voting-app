@@ -42,7 +42,7 @@ angular.module('TimelineModule', ['UsersService','PollsService'])
         	   		    // resets poll object, new poll form and errors
         	   		    $scope.errorPollMessage = '';
         	   		    $scope.newPollForm.$setPristine();
-        	   		    $scope.poll = {title:'', choiceName: ''};
+        	   		    $scope.poll = {title:'', choiceNames: []};
         	   		    
     	   		} else {
     	   			// error, grab the error message from the response and display it on the form.
