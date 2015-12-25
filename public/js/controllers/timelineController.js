@@ -1,5 +1,5 @@
 angular.module('TimelineModule', ['UsersService','PollsService'])
-    .controller('TimelineController',['$scope','$http','UsersSvc','$routeParams','PollsSvc', function($scope, $http, UsersSvc, $routeParams, PollsSvc) {
+    .controller('TimelineController',['$scope','UsersSvc','$routeParams','PollsSvc', function($scope, UsersSvc, $routeParams, PollsSvc) {
             
     $scope.errorPollMessage = '';
     $scope.successPollMessage = '';

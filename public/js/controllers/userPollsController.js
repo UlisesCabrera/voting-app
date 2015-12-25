@@ -1,5 +1,5 @@
 angular.module('UserPollsModule', ['PollsService'])
-.controller('UserPollsController',['$scope', '$routeParams', '$http','PollsSvc', function($scope, $routeParams, $http, PollsSvc){
+.controller('UserPollsController',['$scope', '$routeParams','PollsSvc', function($scope, $routeParams, PollsSvc){
     	// will hold any error message from all the server side comunication
     	$scope.errorMessageProfilePoll = '';
     	

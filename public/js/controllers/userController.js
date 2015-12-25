@@ -1,6 +1,6 @@
 angular.module('UserModule', ['UsersService'])
-	.controller('UserController',['$scope','$http','$location','UsersSvc','$routeParams', 
-	function($scope, $http, $location, UsersSvc, $routeParams){
+	.controller('UserController',['$scope','$location','UsersSvc','$routeParams', 
+	function($scope, $location, UsersSvc, $routeParams){
 		// will hold an error message to give feeback to the user
 		$scope.error_message = '';
 		// will hold user information to be send to the server for authentication.
@@ -99,24 +99,8 @@ angular.module('UserModule', ['UsersService'])
 		   	UsersSvc.newPassword($scope.user)
 			   	.then(
 			   		function() {
-					   	$http.post('/auth/login', $scope.user)
-					   		.then(
-					   			function(res){
-							    	if (res.data.state === "failure") {
-							    		$scope.error_message = "Invalid new password";
-							    	} else {
-							    		
-							    		/* after the password is updated, log in the user,
-							    		*  clear the temp user and refresh the page to get the signed in user
-							    		*/
-							    		$location.path('/');
-							    		window.location.reload();
-							    	}
-					    		},
-						    	function(error){
-						    		$scope.error_message = 'error getting to the server : ' + error.status + ' ' + error.statusText;
-						    	}	
-					    	);
+			   			// after changing password, proceed to login the user.
+			   			$scope.login();
 			   		},
 			    	function(error){
 			    		$scope.error_message = 'error getting to the server : ' + error.status + ' ' + error.statusText;

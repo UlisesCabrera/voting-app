@@ -34,7 +34,7 @@ angular.module('Voting-Poll', ['ngRoute', 'UserModule', 'TimelineModule','Single
 						if(res.data.state === "failure") {
 							$location.path('/login');
 						}
-					})
+					});
 				}
 			}
 		})		
@@ -49,7 +49,7 @@ angular.module('Voting-Poll', ['ngRoute', 'UserModule', 'TimelineModule','Single
 						if(res.data.state === "success") {
 							$location.path('/profile');
 						}
-					})
+					});
 				}
 			}			
 		})

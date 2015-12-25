@@ -1,5 +1,5 @@
 angular.module('SinglePollModule', ['UsersService', 'PollsService'])
-    .controller('SinglePollController',['$scope','$http','UsersSvc','$routeParams','PollsSvc', function($scope, $http, UsersSvc, $routeParams, PollsSvc) {
+    .controller('SinglePollController',['$scope','UsersSvc','$routeParams','PollsSvc', function($scope, UsersSvc, $routeParams, PollsSvc) {
     // will display error message here        
     $scope.errorPollMessage = '';
     // will hold title params to use on the url
