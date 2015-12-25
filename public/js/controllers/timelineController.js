@@ -5,7 +5,28 @@ angular.module('TimelineModule', ['UsersService','PollsService'])
     $scope.successPollMessage = '';
     $scope.displayingPollsError = '';
     
-    $scope.poll = {title:'', choiceName: ''};
+    $scope.poll = {title:'', choiceNames: []};
+    
+    //http://stackoverflow.com/questions/16824853/way-to-ng-repeat-defined-number-of-times-instead-of-repeating-over-array
+    // copy code from the above stackflow question on how to use ng-repeat a define number of times
+    
+    // 2 options by default
+    $scope.options = 2;
+    
+    // returns array with the lenght defined by options qty
+    $scope.getOption = function(num) {
+        return new Array(num);   
+    };
+    
+    // add new option function
+    $scope.addOption = function() {
+        $scope.options+=1;
+    };
+    
+    // delete option function
+    $scope.deleteOption = function(){
+        $scope.options-=1;
+    };
   
     $scope.newPoll = function() {
       PollsSvc.newPoll($scope.poll)

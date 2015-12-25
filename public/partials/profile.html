@@ -10,7 +10,7 @@
             <ul>
                 <li ng-repeat="poll in profilePolls track by poll._id" >
                     <p>{{ poll.title }}</p>
-                    <p>{{ poll.choices }}</p>
+                    <p ng-repeat="choice in poll.choices">{{ choice.choiceName }}</p>
                     <p>{{ poll.created_at | date }}</p>
                     <button class="btn btn-danger btn-lg" ng-click="delete(poll.title, $index)">Delete Poll</button>
                 </li>

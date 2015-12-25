@@ -83,18 +83,24 @@ exports.create =  function(req, res){
             } else {
                 
                 //stage 2 : create new poll
-                //console.log(req.body);
+
                 var newPoll = new Poll();
-                //console.log(newPoll);
+
                 newPoll.title = req.body.title;
                 newPoll.created_by = req.user.username;
-                newPoll.choices = req.body.choiceName;
+                // go thru each options name and push it to the sub document of choices
+                req.body.choiceNames.forEach(function(choice, idx){
+                    newPoll.choices.push({choiceName : choice});
+                });
+                
                 newPoll.created_by_id = req.user.id;
                 newPoll.save(function(err, poll){
                     if (err) {
-                        console.log("error saving poll" + err);
+                        console.log("error saving poll " + err);
+                    } else {
+                        console.log('sucessfully save new poll' + poll); 
                     }
-                    console.log('sucessfully save new poll');
+                    
                 });
                 //Stage 3 :find user by its unique id and increase count of user by 1
                 var query = { _id : req.user.id };

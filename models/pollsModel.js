@@ -12,8 +12,7 @@ var pollSchema = new mongoose.Schema({
 	created_at: {type: Date, default: Date.now},
 	created_by: String,
 	created_by_id : String,
-	choices: String
-	//choices : {type: [choicesSchema], required: true}
+	choices : {type: [choicesSchema], required: true}
 });
 
 // declare a model called Polls Which has schema pollSchema with choicesSchema embedded

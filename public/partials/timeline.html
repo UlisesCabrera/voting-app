@@ -18,14 +18,17 @@
 			    <p ng-message="required">The tile is required.</p>
 			</div>			
 		</div>
-		<div class="form-group" ng-class="{ 'has-error': !newPollForm.title.$pristine && newPollForm.choiceName.$invalid }">
-			<label for="choiceName" class="sr-only">Choice</label>
-			<input type="choiceName" name="choiceName" ng-minlength="1" ng-model="poll.choiceName" placeholder="Choice" class="form-control" required>
-			<div ng-messages="newPollForm.choiceName.$error" ng-if="!newPollForm.title.$pristine">
-			    <p ng-message="minlength">Your choice name is too short.</p>
-			    <p ng-message="required">choice name is required.</p>
-			</div>				
+		<div ng-repeat="i in getOption(options) track by $index">
+			<div class="form-group" ng-class="{ 'has-error': !newPollForm.title.$pristine && newPollForm.choiceName.$invalid }">
+				<label for="choiceName" class="sr-only">Choice</label>
+				<input type="choiceName" name="choiceName" ng-minlength="1" ng-model="poll.choiceNames[$index]" placeholder="Options" class="form-control" required>
+				<div ng-messages="newPollForm.choiceName.$error" ng-if="!newPollForm.title.$pristine">
+				    <p ng-message="minlength">Your choice name is too short.</p>
+				    <p ng-message="required">choice name is required.</p>
+				</div>				
+			</div>
 		</div>
+		<button type="button" class="btn btn-lg btn-info" ng-click="addOption()"> Add Option </button> <button type="button" class="btn btn-lg btn-warning" ng-click="deleteOption()"> Delete Option </button>
 		<input type="submit" value="New Poll" class="btn btn-primary register-btn" ng-disabled="newPollForm.$invalid"/>
 	</form>
 </div>
@@ -38,9 +41,11 @@
 			<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 			{{ displayingPollsError }}
 		</div>
+		
 		<div class="col-xs-12 col-sm-6 text-center" ng-repeat="poll in polls track by poll._id | orderBy:'-created_at'">
 			
 			<h3>{{ poll.title }} <small>by : {{ poll.created_by }}</small></h3>
+			<p ng-repeat="choice in poll.choices">{{choice.choiceName }} <small> {{ choice.votes }}</small></p>
 			<p>Winner: </p>
 			<p>Total Votes: </p>
 			<a href="#/poll/{{ poll.title }}" class="btn btn-info btn-xs"> See Poll </a>
