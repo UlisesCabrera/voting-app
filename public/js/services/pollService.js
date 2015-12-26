@@ -10,8 +10,8 @@ angular.module('PollsService', []).service('PollsSvc', ['$http', function($http)
             };
             
             // gets poll clicked from the timeline
-            this.getSinglePoll = function(title) {
-                var url = '/poll/' + title;
+            this.getSinglePoll = function(id) {
+                var url = '/poll/' + id;
                 return $http.get(url);
             };
             
@@ -22,9 +22,15 @@ angular.module('PollsService', []).service('PollsSvc', ['$http', function($http)
             };
             
             // deletes provided poll from server
-            this.deletePoll = function(title) {
-                var url =  '/poll/delete/' + title;
+            this.deletePoll = function(id) {
+                var url =  '/poll/delete/' + id;
                 return $http.delete(url);
+            };
+            
+            // user can vote
+            this.vote = function(pollId, choiceId) {
+                var url = '/poll/vote/' + pollId + '/' + choiceId;
+                return $http.put(url);                  
             };
         
 }]);

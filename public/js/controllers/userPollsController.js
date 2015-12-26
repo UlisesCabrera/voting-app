@@ -21,8 +21,8 @@ angular.module('UserPollsModule', ['PollsService'])
 	        	}
 	        );
 	    // deletes clicked poll
-	    $scope.delete = function(title, index) {
-            PollsSvc.deletePoll(title)
+	    $scope.delete = function(id, index) {
+            PollsSvc.deletePoll(id)
 	    	    .then(
 	    	        function(res){
         	    		if (res.data.state === 'success') {

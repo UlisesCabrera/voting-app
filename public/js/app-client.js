@@ -6,7 +6,7 @@ angular.module('Voting-Poll', ['ngRoute', 'UserModule', 'TimelineModule','Single
 			templateUrl:'./partials/timeline.html',
 			controller: 'TimelineController'
 		})
-		.when('/poll/:title', {
+		.when('/poll/:id', {
 			templateUrl:'./partials/singlePoll.html',
 			controller: 'SinglePollController'
 		})

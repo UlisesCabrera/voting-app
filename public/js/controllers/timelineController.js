@@ -69,8 +69,8 @@ angular.module('TimelineModule', ['UsersService','PollsService'])
 	        }              
         );
         
-    $scope.delete = function(title, index) {
-    	PollsSvc.deletePoll(title)
+    $scope.delete = function(id, index) {
+    	PollsSvc.deletePoll(id)
     	    .then(
     	        function(res){
             		if (res.data.state === 'failure') {

@@ -30,9 +30,9 @@ exports.list =  function(req,res){
 
 exports.read = function(req,res){
     // Stage 1: construct query
-    var query = {title: req.params.title};
+    var query = {_id: req.params.id};
     // Stage 2: perform a findone search on polls data base
-    Poll.findOne(query, function(err, poll){
+    Poll.findById(query, function(err, poll){
        // Stage 3: check for errors
        if (err) {
            console.log('error getting poll' + err);
@@ -130,14 +130,15 @@ exports.create =  function(req, res){
 };
 
 exports.delete = function(req, res) {
-    // stage 1:  create query to find poll by title name on poll model
+    // stage 1:  create query to find poll by id on poll model
     // and get the user id in order to perform an update on the polls_created count
-    var query = {title : req.params.title};
+    var query = { _id : req.params.id};
     var userQuery = { _id : req.user.id };
     // finding poll
-    Poll.findOne(query, function(err, poll){
+    Poll.findById(query, function(err, poll){
         if (err) {
             console.log("error finding poll to remove " + err );
+            res.send({state: 'failure', message: "error finding poll to remove " + err});
         } else {
             // Stage 2: check if poll is found and check if the username 
             // trying to delete the poll is the creator of the poll
@@ -175,5 +176,38 @@ exports.delete = function(req, res) {
                 res.send({state:'failure', message: 'poll was not found'});
             }
         }
-    })
+    });
+};
+
+exports.vote = function(req, res) {
+    // Stage 1: find choice and increase vote and add user to the voteBy array
+    Poll.findOneAndUpdate(
+        { "_id": req.params.pollId, "choices._id": req.params.choiceId },
+        { 
+            "$push": {
+                voteBy : req.user.username
+            }, 
+            "$inc": {
+                "choices.$.votes": 1
+            }
+        },
+        function(err,doc) {
+            if (err) {
+                console.log('err voting ' + err);
+                res.send({state:'failure', message: 'error voting'});
+            } else {
+                // stage 2: find the updated poll and send it back to client so it can be updated on the view
+                var query =  { _id : doc._id };
+                Poll.findById(query, function(err, poll) {
+                    if (err) {
+                        console.log('error finding the poll to send it back' + err);
+                        res.send({state:'failure', message: 'poll was not found again'});
+                    } else {
+                        res.send({state:'success', poll: poll});   
+                    }
+                });    
+            }
+        }
+    );
+    
 };
