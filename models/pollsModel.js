@@ -8,7 +8,7 @@ var choicesSchema = new mongoose.Schema({
 var pollSchema = new mongoose.Schema({
 	route: String,
 	title: {type: String , required: true},
-	voteBy : Array,
+	voteByUser: Array,
 	created_at: {type: Date, default: Date.now},
 	created_by: String,
 	created_by_id : String,

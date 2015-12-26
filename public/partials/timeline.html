@@ -1,5 +1,5 @@
 <div class="col-xs-12 col-sm-offset-3 col-sm-6">
-	<form ng-if="getCurrentUser()" name="newPollForm" class="form-auth" ng-class="{ 'has-success' : newPollForm.$submitted }" ng-submit="newPoll()" required>
+	<form ng-show="getCurrentUser()" name="newPollForm" class="form-auth" ng-class="{ 'has-success' : newPollForm.$submitted }" ng-submit="newPoll()" required>
 		<h2 class="text-center">Create New Poll</h2>
 		
 		<div ng-show="errorPollMessage" class="alert alert-danger" role="alert">

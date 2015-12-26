@@ -97,33 +97,35 @@ exports.create =  function(req, res){
                 newPoll.save(function(err, poll){
                     if (err) {
                         console.log("error saving poll " + err);
+                        res.send({state: 'failure', message: "error saving poll" });
                     } else {
-                        console.log('sucessfully save new poll' + poll); 
+                        console.log('sucessfully save new poll' + poll);
+                        //Stage 3 :find user by its unique id and increase count of user by 1
+                        var query = { _id : req.user.id };
+                        User.findByIdAndUpdate(query, {
+                            // increase count of user created polls by 1
+                            $inc: { polls_created_count : 1 }
+                            }, function(err, user){
+                            // if any error log it to the console  and send failure response to the client
+                            if (err) {
+                                console.log(err);
+                                console.log('error increasing poll counter to user:' + req.user.id);
+                                res.send({state: 'failure', message: "error increasing poll counter to user: " + req.user.username});
+                            } else {
+                                // stage 4 : send back updated user and newpoll to the client
+                                User.findById(query, function(err, user){
+                                    if (err) {
+                                        console.log('error finding the user' + err);
+                                    } else {
+                                        res.send({state:'success', poll: newPoll, user: user});   
+                                    }
+                                });                            
+                            }
+                        });                        
                     }
                     
                 });
-                //Stage 3 :find user by its unique id and increase count of user by 1
-                var query = { _id : req.user.id };
-                User.findByIdAndUpdate(query, {
-                    // increase count of user created polls by 1
-                    $inc: { polls_created_count : 1 }
-                    }, function(err, user){
-                    // if any error log it to the console  and send failure response to the client
-                    if (err) {
-                        console.log(err);
-                        console.log('error increasing poll counter to user:' + req.user.id);
-                        res.send({state: 'failure', message: "error increasing poll counter to user: " + req.user.username});
-                    } else {
-                        // stage 4 : send back updated user and newpoll to the client
-                        User.findById(query, function(err, user){
-                            if (err) {
-                                console.log('error finding the user' + err);
-                            } else {
-                                res.send({state:'success', poll: newPoll, user: user});   
-                            }
-                        });                            
-                    }
-                });
+                
             }
         }
     });
@@ -185,7 +187,7 @@ exports.vote = function(req, res) {
         { "_id": req.params.pollId, "choices._id": req.params.choiceId },
         { 
             "$push": {
-                voteBy : req.user.username
+                voteByUser : req.user.username
             }, 
             "$inc": {
                 "choices.$.votes": 1

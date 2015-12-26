@@ -6,5 +6,5 @@
 <h1>{{ poll.title }} <small>by: {{ poll.created_by }}</small></h1>
 <div ng-repeat="choice in poll.choices">
 <p>{{ choice.choiceName }} <small>{{ choice.votes }}</small></p>
-<button class="btn" ng-if="poll.voteBy.indexOf(getCurrentUser().username) === -1 && getCurrentUser()" ng-click="vote(poll._id, choice._id)">Vote</button>
+<button class="btn" ng-if="poll.voteByUser.indexOf(getCurrentUser().username) === -1 && getCurrentUser()" ng-click="vote(poll._id, choice._id)">Vote</button>
 </div>
