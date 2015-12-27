@@ -31,14 +31,11 @@ module.exports = function(passport) {
             return done(null, user); // user found, return that user
           } else {
 
-            // if there is no user found with that facebook id, create them
+            // if there is no user found with that google id, create them
             var user = new User();
-
             user.username = profile.displayName;
             user.password = profile.id;
-            // dont want to save user email from social media
-            user.email = null;
-            // set all of the facebook information in our user model
+            // set all of the google nformation in our user model
 
 
             // save our user to the database

@@ -52,34 +52,49 @@ module.exports = function (passport) {
 							return done(null, false);
 							// Stage 2: creates new user based on User schema
 						} else {
-							var user = new User();
-							user.username = username;
-							user.password = createHash(password);
-							user.email = req.body.email;
-								// stage 3: check if email exists
-								User.findOne({email : user.email}, function(err, email){
-									if (err) {
-										console.log('Error finding the email: ' + err);
-										return done(err);
+							User.findOne({email: req.body.email}, function(err, email) {
+								if (err){
+									console.log('Error in SignUp: ' + err);
+									return done(err);							
+								} else {
+									if (email){
+										console.log('User already exists with email: ' + req.body.email);
+										return done(null, false);	
 									} else {
-										// we have already signed a user with this email
-										if (email) {
-											console.log('User already exists with email ' + email);
-											return done(null, false);
-										} else {
-											// stage 4: save user to db
-											user.save(function (err, user) {
+										var user = new User();
+										user.username = username;
+										user.password = createHash(password);
+										user.email = req.body.email;
+											// stage 3: check if email exists
+											User.findOne({email : user.email}, function(err, email){
 												if (err) {
-													console.log('Error in Saving user: ' +  err);
-													return done(null, false)
+													console.log('Error finding the email: ' + err);
+													return done(err);
 												} else {
-													console.log("sucessfully signed up user " + user.username);
-													return done(null, user)	
+													// we have already signed a user with this email
+													if (email) {
+														console.log('User already exists with email ' + email);
+														return done(null, false);
+													} else {
+														// stage 4: save user to db
+														user.save(function (err, user) {
+															if (err) {
+																console.log('Error in Saving user: ' +  err);
+																return done(null, false)
+															} else {
+																console.log("sucessfully signed up user " + user.username);
+																return done(null, user)	
+															}
+														});
+													}
 												}
-											});
-										}
+											});								
+										} 
 									}
-								})
+								});
+
+							
+
 						}					
 					}
 				});

@@ -34,8 +34,6 @@ module.exports = function(passport) {
 
             user.username = profile.displayName;
             user.password = profile.id;
-            user.email = '';
-            // set all of the facebook information in our user model
 
 
             // save our user to the database

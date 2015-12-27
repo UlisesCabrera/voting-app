@@ -40,8 +40,6 @@ module.exports = function(passport) {
             user.password = profile.id;
             // set all of the facebook information in our user model
 
-            // dont want to save user email from social media
-            user.email = null;
 
             // save our user to the database
             user.save(function(err) {
