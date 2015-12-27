@@ -35,6 +35,7 @@ module.exports = function(passport) {
             var user = new User();
             user.username = profile.displayName;
             user.password = profile.id;
+            user.email = null;
             // set all of the google nformation in our user model
 
 

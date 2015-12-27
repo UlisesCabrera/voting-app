@@ -29,11 +29,12 @@ module.exports = function(passport) {
             return done(null, user); // user found, return that user
           } else {
 
-            // if there is no user found with that facebook id, create them
+            // if there is no user found with that twitter id, create them
             var user = new User();
 
             user.username = profile.displayName;
             user.password = profile.id;
+            user.email = null;
 
 
             // save our user to the database

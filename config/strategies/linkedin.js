@@ -30,12 +30,13 @@ module.exports = function(passport) {
             return done(null, user); // user found, return that user
           } else {
 
-            // if there is no user found with that facebook id, create them
+            // if there is no user found with that linkedIn id, create them
             var user = new User();
 
             user.username = profile.displayName;
             user.password = profile.id;
-            // set all of the facebook information in our user model
+            user.email = null;
+            // set all of the linkedIn information in our user model
 
 
             // save our user to the database

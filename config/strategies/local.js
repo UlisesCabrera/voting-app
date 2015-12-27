@@ -20,13 +20,13 @@ module.exports = function (passport) {
 				if (!user) {
 					console.log('User Not Found with username' +  username);
 					return done(null, false);
-				};
+				}
  				
 				// check if the password is correct
 				if (!isValidPassword(user, password)) {
 					console.log('Invalid Password');
 					return done(null, false); // redirect back to login page
-				};
+				}
  				
 				// successfully signed in
 				console.log('successfully signed in');
@@ -50,8 +50,8 @@ module.exports = function (passport) {
 						if (user) {
 							console.log('User already exists with username: ' + username);
 							return done(null, false);
-							// Stage 2: creates new user based on User schema
 						} else {
+							//Stage 2: check if email exists
 							User.findOne({email: req.body.email}, function(err, email) {
 								if (err){
 									console.log('Error in SignUp: ' + err);
@@ -61,40 +61,25 @@ module.exports = function (passport) {
 										console.log('User already exists with email: ' + req.body.email);
 										return done(null, false);	
 									} else {
+										// Stage 3: creates new user based on User schema
 										var user = new User();
 										user.username = username;
 										user.password = createHash(password);
 										user.email = req.body.email;
-											// stage 3: check if email exists
-											User.findOne({email : user.email}, function(err, email){
-												if (err) {
-													console.log('Error finding the email: ' + err);
-													return done(err);
-												} else {
-													// we have already signed a user with this email
-													if (email) {
-														console.log('User already exists with email ' + email);
-														return done(null, false);
-													} else {
-														// stage 4: save user to db
-														user.save(function (err, user) {
-															if (err) {
-																console.log('Error in Saving user: ' +  err);
-																return done(null, false)
-															} else {
-																console.log("sucessfully signed up user " + user.username);
-																return done(null, user)	
-															}
-														});
-													}
-												}
-											});								
-										} 
-									}
-								});
-
-							
-
+										// stage 4: save user to db
+										user.save(function (err, user) {
+											if (err) {
+												console.log('Error in Saving user: ' +  err);
+												return done(null, false);
+											} else {
+												console.log("sucessfully signed up user " + user.username);
+												return done(null, user);	
+											}
+												
+										});								
+									} 
+								}
+							});
 						}					
 					}
 				});
