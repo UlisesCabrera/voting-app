@@ -18,10 +18,23 @@ body {
     background-color: rgba(248, 248, 248, 0);
 }
 #nav-menu.navbar-default .navbar-nav>li>a:hover,
+#nav-menu.navbar-default .navbar-nav>li>.navbar-btn:hover,
 #nav-menu.navbar-default .navbar-nav>li>a:focus {
     color: rgba(5, 219, 252, 1);
     background-color: rgba(10, 9, 9, 1);
 }
+
+#nav-menu.navbar-default .navbar-nav>li>.navbar-btn,
+.register-btn {
+	background-color: rgba(5, 219, 252, 1);
+	color: white;
+	border: none;
+}
+
+.register-btn[disabled]:hover {
+	background-color: #53D5DA;
+}
+
 #nav-menu.navbar-default .navbar-nav>.active>a,
 #nav-menu.navbar-default .navbar-nav>.active>a:hover,
 #nav-menu.navbar-default .navbar-nav>.active>a:focus {
@@ -100,13 +113,20 @@ hr {
 	margin: 40px auto;
 }
 
+.btn-choices {
+	background-color: black;
+}
+.btn-choices:hover {
+    color: rgba(5, 219, 252, 1);
+    background-color: rgba(10, 9, 9, 1);
+}
 
 .form-auth {
 	padding: 5px;
 	margin: 0 auto;
 }
 
- h2 {
+h2 {
 	margin-top:0;
 	margin-bottom:30px;
 }
@@ -118,6 +138,7 @@ h3 {
 .forgotPassword {
 	margin-top:10px;
 }
+
 
 input.btn.btn-primary.login-btn,
 input.btn.btn-primary.register-btn,

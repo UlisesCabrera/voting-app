@@ -29,6 +29,8 @@
 			        </div>
 			        <div class="collapse navbar-collapse navbar-menubuilder">
 			            <ul class="nav navbar-nav navbar-right">
+			            		<li ng-show="getCurrentUser() && isInTimeline()"><button type="button" class="btn btn-default btn-block navbar-btn" data-toggle="modal" data-target=".new-poll-modal">Create New Poll</button>
+</li>
 			            		<li ng-show="getCurrentUser()" ><a href="#/profile/{{ getCurrentUser()._id }}">Hello,  {{ getCurrentUser().username }}</a>
 			                </li>	   
 			                <li ng-show="!getCurrentUser() && !isGettingNewPassword()"><a href="#/login"><i class="fa fa-sign-in"></i> Login</a>

@@ -18,6 +18,14 @@ angular.module('UserModule', ['UsersService'])
 	    	}
 	    };
 	    
+	    $scope.isInTimeline = function() {
+	    	if ($location.url() == '/'){
+	    		return true;
+	    	} else {
+	    		return false;
+	    	}
+	    };
+	    
 	 	// signout for all users (social or local)
 	    $scope.signout = function(){
 	        UsersSvc.signout()

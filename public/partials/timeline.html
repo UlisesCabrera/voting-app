@@ -1,36 +1,60 @@
+<div id="newPollModal" class="modal fade new-poll-modal" tabindex="-1" role="dialog" aria-labelledby="new-poll-modal">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+    	<form ng-show="getCurrentUser()" name="newPollForm" class="form-auth" ng-class="{ 'has-success' : newPollForm.$submitted }" ng-submit="newPoll()" required>	
+	  		<div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h2 class="modal-title text-center">New Poll</h2>
+	      	</div>
+	      	<div class="modal-body">
+		 	
+				<div ng-show="errorPollMessage" class="alert alert-danger" role="alert">
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				{{ errorPollMessage }}</div>
+				
+				<div ng-show="successPollMessage && !newPollForm.$dirty" class="alert alert-success" role="alert">
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				{{ successPollMessage }}</div>
+				
+				<div class="form-group" ng-class="{ 'has-error': !newPollForm.title.$pristine && newPollForm.title.$invalid }">
+					<label for="title" class="sr-only">Title</label>		
+					<input type="title" name="title" ng-minlength="4" ng-model="poll.title" placeholder="Title" class="form-control" required>
+					<div ng-messages="newPollForm.title.$error" ng-if="!newPollForm.title.$pristine">
+					    <p ng-message="minlength">The title is too short.</p>
+					    <p ng-message="required">The tile is required.</p>
+					</div>			
+				</div>
+				<div ng-repeat="i in getChoice(choices) track by $index">
+					<div class="form-group" ng-class="{ 'has-error': !newPollForm.title.$pristine && newPollForm.choiceName.$invalid }">
+						<label for="choiceName" class="sr-only">Choice</label>
+						<input type="choiceName" name="choiceName" ng-minlength="1" ng-model="poll.choiceNames[$index]" placeholder="Choice {{ $index + 1 }}" class="form-control" required>
+						<div ng-messages="newPollForm.choiceName.$error" ng-if="!newPollForm.title.$pristine">
+						    <p ng-message="minlength">Your choice name is too short.</p>
+						    <p ng-message="required">choice name is required.</p>
+						</div>				
+					</div>
+				</div>
+				<div class="btn-group btn-group-justified" role="group" aria-label="...">
+	  				<div class="btn-group" role="group">
+						<button type="button" class="btn btn-sm btn-default btn-choices" ng-click="addChoice()"> Add Choice </button>
+					</div>
+					<div class="btn-group" role="group">
+						<button type="button" class="btn btn-sm btn-default btn-choices" ng-click="deleteChoice()"> Delete Choice </button>
+					</div>
+				</div>	<!-- button group--->				
+			</div><!-- Modal Body--->
+		<div class="modal-footer">
+	
+				<input type="submit" value="Create Poll" class="btn btn-lg btn-primary register-btn" ng-disabled="newPollForm.$invalid"/>
+			</div><!-- Modal Footer--->	
+		</form>
+    </div><!-- Modal Content--->
+  </div>
+</div>
+
+
 <div class="col-xs-12 col-sm-offset-3 col-sm-6">
-	<form ng-show="getCurrentUser()" name="newPollForm" class="form-auth" ng-class="{ 'has-success' : newPollForm.$submitted }" ng-submit="newPoll()" required>
-		<h2 class="text-center">Create New Poll</h2>
-		
-		<div ng-show="errorPollMessage" class="alert alert-danger" role="alert">
-		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-		{{ errorPollMessage }}</div>
-		
-		<div ng-show="successPollMessage && !newPollForm.$dirty" class="alert alert-success" role="alert">
-		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-		{{ successPollMessage }}</div>
-		
-		<div class="form-group" ng-class="{ 'has-error': !newPollForm.title.$pristine && newPollForm.title.$invalid }">
-			<label for="title" class="sr-only">Title</label>		
-			<input type="title" name="title" ng-minlength="4" ng-model="poll.title" placeholder="Poll Title" class="form-control" required>
-			<div ng-messages="newPollForm.title.$error" ng-if="!newPollForm.title.$pristine">
-			    <p ng-message="minlength">The title is too short.</p>
-			    <p ng-message="required">The tile is required.</p>
-			</div>			
-		</div>
-		<div ng-repeat="i in getOption(options) track by $index">
-			<div class="form-group" ng-class="{ 'has-error': !newPollForm.title.$pristine && newPollForm.choiceName.$invalid }">
-				<label for="choiceName" class="sr-only">Choice</label>
-				<input type="choiceName" name="choiceName" ng-minlength="1" ng-model="poll.choiceNames[$index]" placeholder="Options" class="form-control" required>
-				<div ng-messages="newPollForm.choiceName.$error" ng-if="!newPollForm.title.$pristine">
-				    <p ng-message="minlength">Your choice name is too short.</p>
-				    <p ng-message="required">choice name is required.</p>
-				</div>				
-			</div>
-		</div>
-		<button type="button" class="btn btn-lg btn-info" ng-click="addOption()"> Add Option </button> <button type="button" class="btn btn-lg btn-warning" ng-click="deleteOption()"> Delete Option </button>
-		<input type="submit" value="New Poll" class="btn btn-primary register-btn" ng-disabled="newPollForm.$invalid"/>
-	</form>
+
 </div>
 <div>
 	<div class="row">
