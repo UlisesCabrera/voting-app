@@ -62,18 +62,18 @@ module.exports = function (passport) {
 										return done(null, false);	
 									} else {
 										// Stage 3: creates new user based on User schema
-										var user = new User();
-										user.username = username;
-										user.password = createHash(password);
-										user.email = req.body.email;
+										var newUser = new User();
+										newUser.username = username;
+										newUser.password = createHash(password);
+										newUser.email = req.body.email;
 										// stage 4: save user to db
-										user.save(function (err, user) {
+										newUser.save(function (err, newUser) {
 											if (err) {
 												console.log('Error in Saving user: ' +  err);
 												return done(null, false);
 											} else {
-												console.log("sucessfully signed up user " + user.username);
-												return done(null, user);	
+												console.log("sucessfully signed up user " + newUser.username);
+												return done(null, newUser);	
 											}
 												
 										});								

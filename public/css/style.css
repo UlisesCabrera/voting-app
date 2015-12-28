@@ -74,6 +74,8 @@ hr {
 	font-size: 1.6em;
 }
 
+
+
 .btn {
 	color: white;
 	margin: 10px auto;
@@ -145,4 +147,17 @@ input.btn.btn-primary.register-btn,
 input.btn.btn-primary.forgot-btn {
 	margin-left:0;
 	width: 100%;
+}
+
+.page-header {
+	border-bottom: 2px solid black;
+}
+
+div.panel-heading > h2 {
+	font-size: 1.5em;
+}
+
+.panel-footer h3 {
+	margin-bottom: 0;
+	margin-top: 10px;
 }

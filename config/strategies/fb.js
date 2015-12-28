@@ -34,21 +34,23 @@ module.exports = function(passport) {
           } else {
 
             // if there is no user found with that facebook id, create them
-            var user = new User();
+            var newUser = new User();
 
-            user.username = profile.displayName;
-            user.password = profile.id;
-            user.email = null;
+            newUser.username = profile.displayName;
+            newUser.password = profile.id;
+            newUser.email = null;
             // set all of the facebook information in our user model
 
 
             // save our user to the database
-            user.save(function(err) {
-              if (err)
-                throw err;
-
-              // if successful, return the new user
-              return done(null, user);
+            newUser.save(function(err, newUser) {
+              if (err) {
+                console.log("error saving user: " + err);
+                return done(null, false);
+              } else {
+                // if successful, return the new user
+                return done(null, newUser);
+              }
             });
           }
         });

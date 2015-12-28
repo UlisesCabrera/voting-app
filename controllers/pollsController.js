@@ -188,8 +188,9 @@ exports.vote = function(req, res) {
         { 
             "$push": {
                 voteByUser : req.user.username
-            }, 
+            },
             "$inc": {
+                 totalVotes: 1,
                 "choices.$.votes": 1
             }
         },

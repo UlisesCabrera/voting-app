@@ -43,8 +43,7 @@
 					</div>
 				</div>	<!-- button group--->				
 			</div><!-- Modal Body--->
-		<div class="modal-footer">
-	
+			<div class="modal-footer">
 				<input type="submit" value="Create Poll" class="btn btn-lg btn-primary register-btn" ng-disabled="newPollForm.$invalid"/>
 			</div><!-- Modal Footer--->	
 		</form>
@@ -53,27 +52,42 @@
 </div>
 
 
-<div class="col-xs-12 col-sm-offset-3 col-sm-6">
-
-</div>
 <div>
 	<div class="row">
-		<div class="col-xs-12">
-			<h2 class="text-center">Recent Polls:</h2>
+		<div class="col-xs-12 page-header">
+		  <h1 class="text-center">Polls Feed</h1>
 		</div>
 	    <div ng-show="displayingPollsError" class="alert alert-warning" role="alert">
 			<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 			{{ displayingPollsError }}
 		</div>
-		
-		<div class="col-xs-12 col-sm-6 text-center" ng-repeat="poll in polls track by poll._id | orderBy:'-created_at'">
 			
-			<h3>{{ poll.title }} <small>by : {{ poll.created_by }}</small></h3>
-			<p ng-repeat="choice in poll.choices">{{choice.choiceName }} <small> {{ choice.votes }}</small></p>
-			<p>Winner: </p>
-			<p>Total Votes: </p>
-			<a href="#/poll/{{ poll._id }}" class="btn btn-info btn-xs"> See Poll </a>
-			<button ng-if="poll.created_by ===  getCurrentUser().username" class="btn btn-danger btn-lg" ng-click="delete(poll._id, $index)">Delete Poll</button>
+
+			
+		<div class="col-xs-12">
+			<div class="panel panel-default" ng-repeat="poll in polls track by poll._id | orderBy:'-created_at'">
+			  <div class="panel-heading">
+				<button ng-if="poll.created_by ===  getCurrentUser().username" ng-click="delete(poll._id, $index)" type="button" class="close" aria-label="Delete"><span aria-hidden="true">&times;</span></button>			  	
+			    <h2 class="panel-title text-center">{{ poll.title }} <small>by {{ poll.created_by }}</small></h2>
+
+			  </div>
+				  <div class="panel-body text-center">
+				   	<ul class="list-inline">
+				   		<li ng-repeat="choice in poll.choices"><h4 class="text-center">{{choice.choiceName }} <span class="badge">{{ choice.votes }}</span></h4> </li>
+				   	</ul>
+				  </div>
+				  <div class="panel-footer">
+				  	<div class="row">
+					  	<div class="col-xs-6">
+				  			<h3 class="text-center">Total Votes: {{ poll.totalVotes }}</h3>
+				  		</div>
+				  		<div class="col-xs-6">
+				  			<a href="#/poll/{{ poll._id }}" class="btn btn-danger btn-block"> Go To Poll </a>
+				  	  	</div>				  		
+				  	</div>
+
+				 </div>
+			  </div>
 		</div>
 	</div>
 </div>

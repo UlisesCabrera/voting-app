@@ -62,6 +62,7 @@ angular.module('TimelineModule', ['UsersService','PollsService'])
             function(res){
             	if (res.data.state === 'success') {
             		$scope.polls = res.data.polls;
+                
             	} else {
             		$scope.displayingPollsError = res.data.message;
             	}
@@ -86,5 +87,7 @@ angular.module('TimelineModule', ['UsersService','PollsService'])
 	        	}    	        
     	    );
     };
+    
+           
     
 }]);
