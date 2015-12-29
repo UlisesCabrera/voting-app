@@ -30,6 +30,9 @@
     "angular-route": "~1.4.8",
     "angular-messages": "~1.4.8",
     "font-awesome": "~4.5.0",
-    "chartist": "~0.9.5"
+    "chartist": "~0.9.5",
+    "angular-chartist.js": "~3.3.12",
+    "Chart.js": "~1.0.2",
+    "angular-chart.js": "~0.8.8"
   }
 }

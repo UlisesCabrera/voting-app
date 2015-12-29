@@ -161,3 +161,37 @@ div.panel-heading > h2 {
 	margin-bottom: 0;
 	margin-top: 10px;
 }
+
+.badge-vote, .badge {
+    background-color: rgba(10, 9, 9, 1);
+    background: -webkit-linear-gradient(top, rgba(66, 65, 65, 0.89) 0%, rgba(10, 9, 9, 1) 100%);
+    background: linear-gradient(to bottom, rgba(66, 65, 65, 0.89) 0%, rgba(10, 9, 9, 1) 100%);
+}
+
+
+
+.badge {
+	color: rgba(5, 219, 252, 1);
+}
+
+.badge-vote {
+	cursor: pointer;
+	color: white;
+}
+
+.badge-vote:hover {
+    color: rgba(5, 219, 252, 1);
+    background-color: rgba(10, 9, 9, 1);
+}
+
+.btn-goTo {
+    background-color: rgba(10, 9, 9, 1);
+    background: -webkit-linear-gradient(top, rgba(66, 65, 65, 0.89) 0%, rgba(10, 9, 9, 1) 100%);
+    background: linear-gradient(to bottom, rgba(66, 65, 65, 0.89) 0%, rgba(10, 9, 9, 1) 100%);
+    border-bottom-width: 0px;
+}
+
+.btn-goTo:hover {
+    color: rgba(5, 219, 252, 1);
+    background-color: rgba(10, 9, 9, 1);
+}

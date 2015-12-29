@@ -1,12 +1,21 @@
-<div class="ct-chart ct-perfect-fourth"></div>
+ <div class="col-xs-12 page-header">
+     <a href="#/" class="btn btn-lg btn-default btn-goTo">Go back</a>
+     <h1>{{ poll.title }} <small>by: {{ poll.created_by }}</small></h1>
+ </div>
+<div class="col-xs-12 col-sm-4">
+    <div ng-show="errorPollMessage" class="alert alert-danger" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    {{ errorPollMessage }}</div>	
+    <ul class="list-group">
+        <li style="background-color: {{colors[$index]}}; color: white" class="list-group-item" ng-repeat="choice in poll.choices">
+                {{ choice.choiceName }}
+            <span class="badge badge-vote" ng-if="poll.voteByUser.indexOf(getCurrentUser().username) === -1 && getCurrentUser()" ng-click="vote(poll._id, choice._id)">Vote</span>
+            <span class="badge">{{ choice.votes }} </span>
+        </li>
+    </ul>    
+</div>
 
-<div ng-show="errorPollMessage" class="alert alert-danger" role="alert">
-<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-{{ errorPollMessage }}</div>	
-
-<a href="#/" class="btn btn-lg btn-success">Go back</a>
-<h1>{{ poll.title }} <small>by: {{ poll.created_by }}</small></h1>
-<div ng-repeat="choice in poll.choices">
-<p>{{ choice.choiceName }} <small>{{ choice.votes }}</small></p>
-<button class="btn" ng-if="poll.voteByUser.indexOf(getCurrentUser().username) === -1 && getCurrentUser()" ng-click="vote(poll._id, choice._id)">Vote</button>
+<div class="col-xs-12 col-sm-8">
+  <canvas id="pie" class="chart chart-pie" chart-data="data" chart-labels="labels" chart-legend="true" chart-colours="colors" ng-if='poll.totalVotes > 0'>
+  </canvas>    
 </div>

@@ -51,43 +51,35 @@
   </div>
 </div>
 
+<div class="col-xs-12 page-header">
+  <h1 class="text-center">Polls Feed</h1>
+</div>
 
-<div>
-	<div class="row">
-		<div class="col-xs-12 page-header">
-		  <h1 class="text-center">Polls Feed</h1>
-		</div>
-	    <div ng-show="displayingPollsError" class="alert alert-warning" role="alert">
-			<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			{{ displayingPollsError }}
-		</div>
-			
-
-			
-		<div class="col-xs-12">
-			<div class="panel panel-default" ng-repeat="poll in polls track by poll._id | orderBy:'-created_at'">
-			  <div class="panel-heading">
-				<button ng-if="poll.created_by ===  getCurrentUser().username" ng-click="delete(poll._id, $index)" type="button" class="close" aria-label="Delete"><span aria-hidden="true">&times;</span></button>			  	
-			    <h2 class="panel-title text-center">{{ poll.title }} <small>by {{ poll.created_by }}</small></h2>
-
-			  </div>
-				  <div class="panel-body text-center">
-				   	<ul class="list-inline">
-				   		<li ng-repeat="choice in poll.choices"><h4 class="text-center">{{choice.choiceName }} <span class="badge">{{ choice.votes }}</span></h4> </li>
-				   	</ul>
-				  </div>
-				  <div class="panel-footer">
-				  	<div class="row">
-					  	<div class="col-xs-6">
-				  			<h3 class="text-center">Total Votes: {{ poll.totalVotes }}</h3>
-				  		</div>
-				  		<div class="col-xs-6">
-				  			<a href="#/poll/{{ poll._id }}" class="btn btn-danger btn-block"> Go To Poll </a>
-				  	  	</div>				  		
-				  	</div>
-
-				 </div>
-			  </div>
-		</div>
+<div class="col-xs-12">
+    <div ng-show="displayingPollsError" class="alert alert-warning" role="alert">
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		{{ displayingPollsError }}
+	</div>
+	<div class="panel panel-default" ng-repeat="poll in polls track by poll._id | orderBy:'-created_at'">
+	  <div class="panel-heading">
+		<button ng-if="poll.created_by ===  getCurrentUser().username" ng-click="delete(poll._id, $index)" type="button" class="close" aria-label="Delete"><span aria-hidden="true">&times;</span></button>			  	
+	    <h2 class="panel-title text-center">{{ poll.title }} <small>by {{ poll.created_by }}</small></h2>
+	  </div>
+	  
+	  <div class="panel-body text-center">
+	   	<ul class="list-inline">
+	   		<li ng-repeat="choice in poll.choices"><h4 class="text-center">{{choice.choiceName }} <span class="badge">{{ choice.votes }}</span></h4> </li>
+	   	</ul>
+	  </div>
+	  <div class="panel-footer">
+	  	<div class="row">
+		  	<div class="col-xs-6">
+	  			<h3 class="text-center">Total Votes: {{ poll.totalVotes }}</h3>
+	  		</div>
+	  		<div class="col-xs-6">
+	  			<a href="#/poll/{{ poll._id }}" class="btn btn-default btn-block btn-goTo"> Go To Poll </a>
+	  	  	</div>				  		
+	  	</div>
+	 </div>
 	</div>
 </div>
