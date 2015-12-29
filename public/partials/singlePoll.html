@@ -5,14 +5,22 @@
 <div class="col-xs-12 col-sm-4">
     <div ng-show="errorPollMessage" class="alert alert-danger" role="alert">
     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-    {{ errorPollMessage }}</div>	
+    {{ errorPollMessage }}</div>
+    <div ng-hide="getCurrentUser()" class="alert alert-warning" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        You must be logged in to vote
+    </div>
+    <div ng-show="poll.voteByUser.indexOf(getCurrentUser().username) !== -1 && getCurrentUser()" class="alert alert-success" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        You already vote!
+    </div>	     
     <ul class="list-group">
         <li style="background-color: {{colors[$index]}}; color: white" class="list-group-item" ng-repeat="choice in poll.choices">
                 {{ choice.choiceName }}
             <span class="badge badge-vote" ng-if="poll.voteByUser.indexOf(getCurrentUser().username) === -1 && getCurrentUser()" ng-click="vote(poll._id, choice._id)">Vote</span>
             <span class="badge">{{ choice.votes }} </span>
         </li>
-    </ul>    
+    </ul>
 </div>
 
 <div class="col-xs-12 col-sm-8">
