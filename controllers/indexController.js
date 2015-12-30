@@ -21,6 +21,7 @@ if (req.user) {
 }
   res.render('index', { 
       title: 'Poll-Sation',
-      user: JSON.stringify(req.user)
+      user: JSON.stringify(req.user),
+      fbId : process.env.FB_CLIENT_ID
   });
 }

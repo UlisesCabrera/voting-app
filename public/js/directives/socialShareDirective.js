@@ -12,7 +12,7 @@ angular.module('socialShare',[]).directive('fbLike', [
                         // Load Facebook SDK if not already loaded
                         $.getScript('//connect.facebook.net/en_US/sdk.js', function () {
                             $window.FB.init({
-                                appId: '1094695087210363',
+                                appId: window.fbId,
                                 xfbml: true,
                                 version: 'v2.5'
                             });
