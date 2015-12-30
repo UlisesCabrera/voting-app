@@ -5,7 +5,7 @@
 - NPM
 - Mongodb
 - Bower
-- 
+
 ### Installation
 
 1.Install dependecies 
