@@ -1,32 +1,136 @@
+
+/*******************
+
+	GENERAL STYLES
+	
+********************/
+
 body {
 	padding-top:70px;
 	background-image: url('../img/notebook.png');
 }
 
-#nav-menu.navbar-default .navbar-brand {
-    color: rgba(5, 219, 252, 1);
+hr {
+	height:10px;
 }
+
+h2 {
+	margin-top:0;
+	margin-bottom:30px;
+}
+
+h3 {
+	margin-bottom: 20px;
+}
+
+.socialLogo {
+	font-size: 1.6em;
+}
+
+.page-header {
+	border-bottom: 2px solid black;
+}
+
+.badge-vote, .badge {
+    background-color: rgb(10, 9, 9);
+    background: -webkit-linear-gradient(top, rgba(66, 65, 65, 0.89) 0%, rgba(10, 9, 9, 1) 100%);
+    background: linear-gradient(to bottom, rgba(66, 65, 65, 0.89) 0%, rgba(10, 9, 9, 1) 100%);
+}
+
+.badge {
+	color: rgb(5, 219, 252);
+}
+
+.badge-vote {
+	cursor: pointer;
+	color: white;
+}
+
+.badge-vote:hover {
+	color: rgb(5, 219, 252);
+    background-color: rgb(10, 9, 9);
+}
+
+div.panel-heading > h2 {
+	font-size: 1.5em;
+}
+
+.panel-footer h3 {
+	margin-bottom: 0;
+	margin-top: 10px;
+}
+
+.shareTitle {
+	margin-top:30px;
+}
+
+/*******************
+
+	NAV STYLES
+	
+********************/
+
+#nav-menu.navbar-default .navbar-brand {
+    color: rgb(5, 219, 252);
+}
+
 #nav-menu.navbar-default {
     font-size: 14px;
-    background-color: rgba(10, 9, 9, 1);
+    background-color: rgb(10, 9, 9);
     background: -webkit-linear-gradient(top, rgba(66, 65, 65, 0.89) 0%, rgba(10, 9, 9, 1) 100%);
     background: linear-gradient(to bottom, rgba(66, 65, 65, 0.89) 0%, rgba(10, 9, 9, 1) 100%);
     border-bottom-width: 0px;
 }
+
 #nav-menu.navbar-default .navbar-nav>li>a {
-    color: rgba(255, 255, 255, 1);
+    color: rgb(255, 255, 255);
     background-color: rgba(248, 248, 248, 0);
 }
+
 #nav-menu.navbar-default .navbar-nav>li>a:hover,
 #nav-menu.navbar-default .navbar-nav>li>.navbar-btn:hover,
 #nav-menu.navbar-default .navbar-nav>li>a:focus {
-    color: rgba(5, 219, 252, 1);
-    background-color: rgba(10, 9, 9, 1);
+    color: rgb(5, 219, 252);
+    background-color: rgb(10, 9, 9);
 }
 
-#nav-menu.navbar-default .navbar-nav>li>.navbar-btn,
+#nav-menu.navbar-default .navbar-nav>li>.navbar-btn {
+	background-color: rgb(5, 219, 252);
+	color: white;
+	border: none;
+}
+
+#nav-menu.navbar-default .navbar-nav>.active>a,
+#nav-menu.navbar-default .navbar-nav>.active>a:hover,
+#nav-menu.navbar-default .navbar-nav>.active>a:focus {
+    color: white;
+    background-color: rgb(5, 219, 252);
+}
+
+#nav-menu.navbar-default .navbar-toggle {
+    border-color: #05dbfc;
+}
+
+#nav-menu.navbar-default .navbar-toggle:hover,
+#nav-menu.navbar-default .navbar-toggle:focus {
+    background-color: #05dbfc;
+}
+
+#nav-menu.navbar-default .navbar-toggle .icon-bar {
+    background-color: #05dbfc;
+}
+
+#nav-menu.navbar-default .navbar-toggle:hover .icon-bar,
+#nav-menu.navbar-default .navbar-toggle:focus .icon-bar {
+    background-color: #0a0909;
+}
+/*******************
+
+	BUTTONS STYLES
+	
+********************/
 .register-btn {
-	background-color: rgba(5, 219, 252, 1);
+	background-color: rgb(5, 219, 252);
 	color: white;
 	border: none;
 }
@@ -35,46 +139,12 @@ body {
 	background-color: #53D5DA;
 }
 
-#nav-menu.navbar-default .navbar-nav>.active>a,
-#nav-menu.navbar-default .navbar-nav>.active>a:hover,
-#nav-menu.navbar-default .navbar-nav>.active>a:focus {
-    color: rgba(255, 255, 255, 1);
-    background-color: rgba(5, 219, 252, 1);
+input.btn.btn-primary.login-btn,
+input.btn.btn-primary.register-btn,
+input.btn.btn-primary.forgot-btn {
+	margin-left:0;
+	width: 100%;
 }
-#nav-menu.navbar-default .navbar-toggle {
-    border-color: #05dbfc;
-}
-#nav-menu.navbar-default .navbar-toggle:hover,
-#nav-menu.navbar-default .navbar-toggle:focus {
-    background-color: #05dbfc;
-}
-#nav-menu.navbar-default .navbar-toggle .icon-bar {
-    background-color: #05dbfc;
-}
-#nav-menu.navbar-default .navbar-toggle:hover .icon-bar,
-#nav-menu.navbar-default .navbar-toggle:focus .icon-bar {
-    background-color: #0a0909;
-}
-
-.auth-div {
-	background-color: white;
-	border: 1px solid black;
-	border-radius: 10px;
-	padding: 20px;
-	-webkit-box-shadow: 2px 7px 45px 2px rgba(0,0,0,0.19);
-	-moz-box-shadow: 2px 7px 45px 2px rgba(0,0,0,0.19);
-	box-shadow: 2px 7px 45px 2px rgba(0,0,0,0.19);	
-}
-
-hr {
-	height:10px;
-}
-
-.socialLogo {
-	font-size: 1.6em;
-}
-
-
 
 .btn {
 	color: white;
@@ -109,18 +179,48 @@ hr {
 	background-color: #999999;
 }
 
-
-.orText {
-	font-size: 3em;
-	margin: 40px auto;
-}
-
 .btn-choices {
 	background-color: black;
 }
 .btn-choices:hover {
-    color: rgba(5, 219, 252, 1);
-    background-color: rgba(10, 9, 9, 1);
+	color: rgb(5, 219, 252);
+    background-color: rgb(10, 9, 9);
+}
+
+.btn-goTo {
+    background-color: rgb(10, 9, 9);
+    background: -webkit-linear-gradient(top, rgba(66, 65, 65, 0.89) 0%, rgba(10, 9, 9, 1) 100%);
+    background: linear-gradient(to bottom, rgba(66, 65, 65, 0.89) 0%, rgba(10, 9, 9, 1) 100%);
+    border-bottom-width: 0px;
+}
+
+.btn-goTo:hover {
+    color: rgb(5, 219, 252);
+    background-color: rgb(10, 9, 9);
+}
+
+.shareBtn {
+	margin-right: 5px;
+}
+
+/*******************
+
+	FORM STYLES
+	
+********************/
+.auth-div {
+	background-color: white;
+	border: 1px solid black;
+	border-radius: 10px;
+	padding: 20px;
+	-webkit-box-shadow: 2px 7px 45px 2px rgba(0,0,0,0.19);
+	-moz-box-shadow: 2px 7px 45px 2px rgba(0,0,0,0.19);
+	box-shadow: 2px 7px 45px 2px rgba(0,0,0,0.19);	
+}
+
+.orText {
+	font-size: 3em;
+	margin: 40px auto;
 }
 
 .form-auth {
@@ -128,80 +228,8 @@ hr {
 	margin: 0 auto;
 }
 
-h2 {
-	margin-top:0;
-	margin-bottom:30px;
-}
-
-h3 {
-	margin-bottom: 20px;
-}
-
 .forgotPassword {
 	margin-top:10px;
-}
-
-
-input.btn.btn-primary.login-btn,
-input.btn.btn-primary.register-btn,
-input.btn.btn-primary.forgot-btn {
-	margin-left:0;
-	width: 100%;
-}
-
-.page-header {
-	border-bottom: 2px solid black;
-}
-
-div.panel-heading > h2 {
-	font-size: 1.5em;
-}
-
-.panel-footer h3 {
-	margin-bottom: 0;
-	margin-top: 10px;
-}
-
-.badge-vote, .badge {
-    background-color: rgba(10, 9, 9, 1);
-    background: -webkit-linear-gradient(top, rgba(66, 65, 65, 0.89) 0%, rgba(10, 9, 9, 1) 100%);
-    background: linear-gradient(to bottom, rgba(66, 65, 65, 0.89) 0%, rgba(10, 9, 9, 1) 100%);
-}
-
-
-
-.badge {
-	color: rgba(5, 219, 252, 1);
-}
-
-.badge-vote {
-	cursor: pointer;
-	color: white;
-}
-
-.badge-vote:hover {
-    color: rgba(5, 219, 252, 1);
-    background-color: rgba(10, 9, 9, 1);
-}
-
-.btn-goTo {
-    background-color: rgba(10, 9, 9, 1);
-    background: -webkit-linear-gradient(top, rgba(66, 65, 65, 0.89) 0%, rgba(10, 9, 9, 1) 100%);
-    background: linear-gradient(to bottom, rgba(66, 65, 65, 0.89) 0%, rgba(10, 9, 9, 1) 100%);
-    border-bottom-width: 0px;
-}
-
-.btn-goTo:hover {
-    color: rgba(5, 219, 252, 1);
-    background-color: rgba(10, 9, 9, 1);
-}
-
-.shareBtn {
-	margin-right: 5px;
-}
-
-.shareTitle {
-	margin-top:30px;
 }
 
 @media (max-width: 768px) { 
@@ -211,5 +239,4 @@ div.panel-heading > h2 {
 	.shareTitle {
 		margin-top:15px;
 	}
-	
 }
