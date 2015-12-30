@@ -1,7 +1,7 @@
-/*global randomColor, angular */
+/*global randomColor, angular, twttr */
 
 angular.module('SinglePollModule', ['UsersService', 'PollsService', 'chart.js'])
-    .controller('SinglePollController',['$scope','UsersSvc','$routeParams','PollsSvc', function($scope, UsersSvc, $routeParams, PollsSvc) {
+    .controller('SinglePollController',['$scope','UsersSvc','$routeParams','PollsSvc','$location', function($scope, UsersSvc, $routeParams, PollsSvc, $location) {
     // will display error message here        
     $scope.errorPollMessage = '';
     
@@ -37,6 +37,8 @@ angular.module('SinglePollModule', ['UsersService', 'PollsService', 'chart.js'])
             	if (res.data.state === 'success') {
             	    pushDataToChart(res.data.poll.choices);
             		$scope.poll = res.data.poll;
+            		// building tweet to use if sharing via twitter.
+                    $scope.tweetText = 'Check out this poll: ' + $scope.poll.title + ' made by: ' + $scope.poll.created_by;
             	} else {
             		$scope.errorPollMessage = res.data.message;
             	}
@@ -64,5 +66,6 @@ angular.module('SinglePollModule', ['UsersService', 'PollsService', 'chart.js'])
     	        	$scope.errorPollMessage = 'error getting to the server : ' + error.status + ' ' + error.statusText;
     	        }    
         );
-    };    
+    };
+   
 }]);

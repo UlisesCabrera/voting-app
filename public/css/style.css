@@ -195,3 +195,21 @@ div.panel-heading > h2 {
     color: rgba(5, 219, 252, 1);
     background-color: rgba(10, 9, 9, 1);
 }
+
+.shareBtn {
+	margin-right: 5px;
+}
+
+.shareTitle {
+	margin-top:30px;
+}
+
+@media (max-width: 768px) { 
+	.fb-shareBtn {
+		margin:10px auto 14px;
+	}
+	.shareTitle {
+		margin-top:15px;
+	}
+	
+}

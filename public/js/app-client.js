@@ -1,4 +1,4 @@
-angular.module('Voting-Poll', ['ngRoute', 'UserModule', 'TimelineModule','SinglePollModule','ngMessages','UserPollsModule'])
+angular.module('Voting-Poll', ['ngRoute', 'UserModule', 'TimelineModule','SinglePollModule','ngMessages','UserPollsModule','socialShare'])
 
 .config(function($routeProvider, $locationProvider){
 	$routeProvider

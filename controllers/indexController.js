@@ -20,7 +20,7 @@ if (req.user) {
     }
 }
   res.render('index', { 
-      title: 'Voting App',
+      title: 'Poll-Sation',
       user: JSON.stringify(req.user)
   });
 }

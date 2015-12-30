@@ -33,6 +33,7 @@
     "chartist": "~0.9.5",
     "angular-chartist.js": "~3.3.12",
     "Chart.js": "~1.0.2",
-    "angular-chart.js": "~0.8.8"
+    "angular-chart.js": "~0.8.8",
+    "angulike": "~1.2.0"
   }
 }
