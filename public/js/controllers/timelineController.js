@@ -2,7 +2,6 @@ angular.module('TimelineModule', ['UsersService','PollsService'])
     .controller('TimelineController',['$scope','UsersSvc','$routeParams','PollsSvc', function($scope, UsersSvc, $routeParams, PollsSvc) {
             
     $scope.errorPollMessage = '';
-    $scope.successPollMessage = '';
     $scope.displayingPollsError = '';
     
     $scope.poll = {title:'', choiceNames: []};
@@ -79,7 +78,21 @@ angular.module('TimelineModule', ['UsersService','PollsService'])
             		if (res.data.state === 'failure') {
             			$scope.errorMessageDeletingPoll = res.data.message;
             		} else {
-            			$scope.polls.splice(index, 1);
+            		    // refresh the timeline with the aviable polls
+            			    PollsSvc.getAllPolls()
+                                .then(
+                                    function(res){
+                                    	if (res.data.state === 'success') {
+                                    		$scope.polls = res.data.polls;
+                                        
+                                    	} else {
+                                    		$scope.displayingPollsError = res.data.message;
+                                    	}
+                                    },
+                                    function(error) {
+                        	        	$scope.errorMessageDeletingPoll = 'error getting to the server : ' + error.status + ' ' + error.statusText;
+                        	        }              
+                                );
             		}
     	        },
 	        	function(error) {

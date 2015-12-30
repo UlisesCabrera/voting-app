@@ -26,7 +26,21 @@ angular.module('UserPollsModule', ['PollsService'])
 	    	    .then(
 	    	        function(res){
         	    		if (res.data.state === 'success') {
-        	    			$scope.profilePolls.splice(index, 1);
+        	    			// refresh the profile with the aviable polls
+	    					PollsSvc.getUserPolls($routeParams.id)
+							    .then(
+					    		    function(res){
+					    		        // fills array with user polls
+					    	    		if (res.data.state === "success") {
+					    	    			$scope.profilePolls = res.data.polls;
+					    	    		} else {
+					    	    			console.log("error getting user poll");
+					    	    		}	
+						            },
+						        	function(error) {
+						        		$scope.errorMessageProfilePoll = 'error getting to the server : ' + error.status + ' ' + error.statusText;
+						        	}
+						        );
         	    		} else {
         	    			$scope.errorMessageProfilePoll = res.data.message;
         	    		}
