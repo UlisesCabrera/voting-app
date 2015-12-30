@@ -1,22 +1,59 @@
+# Poll Creation and Sharing app
 
-     ,-----.,--.                  ,--. ,---.   ,--.,------.  ,------.
-    '  .--./|  | ,---. ,--.,--. ,-|  || o   \  |  ||  .-.  \ |  .---'
-    |  |    |  || .-. ||  ||  |' .-. |`..'  |  |  ||  |  \  :|  `--, 
-    '  '--'\|  |' '-' ''  ''  '\ `-' | .'  /   |  ||  '--'  /|  `---.
-     `-----'`--' `---'  `----'  `---'  `--'    `--'`-------' `------'
-    ----------------------------------------------------------------- 
+### Requirements
+- Node.js
+- NPM
+- Mongodb
+- Bower
+- 
+### Installation
 
+1.Install dependecies 
 
-Welcome to your Node.js project on Cloud9 IDE!
+```sh
+$ npm install
+```
 
-This chat example showcases how to use `socket.io` with a static `express` server.
+2.Create a .bowerrc file on the app root folder with the following info
 
-## Running the server
+```sh
+{
+    "directory" : "public/vendor"
+}
+```
+3.Install vendor dependecies
 
-1) Open `server.js` and start the app by clicking on the "Run" button in the top menu.
+```sh
+$ bower install
+```
 
-2) Alternatively you can launch the app from the Terminal:
+4.Create a .env file on the app root folder with the following info
 
-    $ node server.js
+```sh
+BASEURL= [main url of application]
+MONGO_URI=[mongodb url]
 
-Once the server is running, open the project in the shape of 'https://projectname-username.c9.io/'. As you enter your name, watch the Users list (on the left) update. Once you press Enter or Send, the message is shared with all connected clients.
+FB_CLIENT_ID=[fb client id]
+FB_CLIENT_SECRET=[fb client secret]
+
+GITHUB_ID=[github id]
+GITHUB_SECRET=[github secret]
+
+GOOGLE_ID=[google id]
+GOOGLE_SECRET=[google secret]
+
+LINKEDIN_KEY=[linkedIn client id]
+LINKEDIN_SECRET=[linkedIn secret]
+
+TWITTER_KEY=[twitter client id]
+TWITTER_SECRET=[twitter secret]
+```
+### Run
+
+```sh
+$ npm start
+```
+
+### TODOS
+
+ - User Story: As an authenticated user, if I don't like the options on a poll, I can create a new option.
